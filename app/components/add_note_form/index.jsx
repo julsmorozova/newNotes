@@ -24,7 +24,8 @@ let input = ''
 
 const mapStateToProps = (state) => {
   return {
-    noteFormOpen : state.view.noteFormOpen
+    noteFormOpen : state.view.noteFormOpen,
+    todos : state.notes.todos
   }
 }
 
@@ -124,9 +125,10 @@ class AddNoteForm extends React.Component {
               iconClassName='material-icons'
               iconStyle={{color: '#777'}}
               onClick={() => {
-                onAddClick(input.value || 'No title', anchor.value)
+                onAddClick(input.value || 'No title', anchor.value, this.props.todos)
                 input.value = ''
                 anchor.value = ''
+                console.log(this.props.todos)
               }}
             >
               done

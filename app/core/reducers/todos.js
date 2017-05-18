@@ -17,7 +17,7 @@ const todo = (state=initialViewState.todo, action) => {
   switch (action.type) {
     case ADD_TODO:
       return {
-        id: action.id,
+        id: state.note.id + action.id,
         text: action.text,
         completed: false
       }

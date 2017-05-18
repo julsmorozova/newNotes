@@ -6,7 +6,7 @@ import styles from './todo_list.scss'
 
 const mapStateToProps = (state) => {
   return {
-    todos: state.todos
+    todos: state.notes.todos
   }
 }
 
@@ -20,11 +20,14 @@ const mapDispatchToProps = (dispatch) => {
 class TodoList extends React.Component {
 
   makeTodos() {
-    return this.props.todos.map(todo => {
-      return (
-        <Todo key={todo.id} todo={todo} deleteTodo={this.props.deleteTodo} />
-      )
-    })
+    if (this.props.todos) {
+      return this.props.todos.map(todo => {
+        return (
+          <Todo key={todo.id} todo={todo} deleteTodo={this.props.deleteTodo} />
+        )
+      })
+    }
+    return ''
   }
 
   render() {
