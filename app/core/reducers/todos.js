@@ -1,7 +1,9 @@
 import {
   ADD_TODO,
   TOGGLE_TODO,
-  DELETE_TODO
+  DELETE_TODO,
+  REMOVE_TODOS,
+  ADD_NOTE
 } from 'core/actions'
 
 const initialViewState = {
@@ -17,7 +19,7 @@ const todo = (state=initialViewState.todo, action) => {
   switch (action.type) {
     case ADD_TODO:
       return {
-        id: state.note.id + action.id,
+        id: action.id,
         text: action.text,
         completed: false
       }
@@ -41,6 +43,8 @@ const todos = (state=initialViewState.todos, action) => {
         ...state,
         todo(state, action)
       ]
+    case ADD_NOTE:
+      return []
     case TOGGLE_TODO:
       return state.map(t => todo(t, action))
     case DELETE_TODO:

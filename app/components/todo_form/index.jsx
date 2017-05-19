@@ -8,7 +8,8 @@ let task = ''
 
 const mapStateToProps = (state) => {
   return {
-    todoFormOpen: state.view.todoFormOpen
+    todoFormOpen: state.view.todoFormOpen,
+    todos: state.todos
   }
 }
 

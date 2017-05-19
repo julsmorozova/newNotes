@@ -5,7 +5,8 @@ export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 export const TOGGLE_SETTINGS = 'TOGGLE_SETTINGS'
 export const ADD_NOTE = 'ADD_NOTE'
 export const OPEN_TODO_FORM = 'OPEN_TODO_FORM'
-export const HIDE_NOTE_FORM = 'HIDE_NOTE_FORM'
+export const HIDE_TODO_FORM = 'HIDE_TODO_FORM'
+export const REMOVE_TODOS = 'REMOVE_TODOS'
 // export const DELETE_NOTE = 'DELETE_NOTE'
 let nextTodoId = 0
 let newId = 0
@@ -18,10 +19,11 @@ export const addTodo = (text) => {
     completed: false //initially set to false
   }
 }
-export const toggleTodo = (id) => {
+export const toggleTodo = (id, ...payload) => {
   return {
     type: TOGGLE_TODO,
-    id
+    id,
+    ...payload
   }
 }
 export const deleteTodo = (id) => {
@@ -50,8 +52,10 @@ export const addNote = (title, text, todos) => {
   }
 }
 
+export const removeTodos = (payload) => ({ type: REMOVE_TODOS, ...payload })
+
 export const openTodoForm = (payload) => ({ type: OPEN_TODO_FORM, ...payload })
-export const hideNoteForm = (payload) => ({ type: HIDE_NOTE_FORM, ...payload })
+export const hideTodoForm = (payload) => ({ type: HIDE_TODO_FORM, ...payload })
 
 // export const deleteNote = (payload = {}) => ({
 //   type: DELETE_NOTE,

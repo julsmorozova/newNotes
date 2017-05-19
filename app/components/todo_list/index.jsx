@@ -4,11 +4,11 @@ import { deleteTodo } from 'core/actions'
 import Todo from 'components/todo'
 import styles from './todo_list.scss'
 
-const mapStateToProps = (state) => {
-  return {
-    todos: state.notes.todos
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     notes: state.notes
+//   }
+// }
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -39,4 +39,4 @@ class TodoList extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+export default connect(null, mapDispatchToProps)(TodoList)

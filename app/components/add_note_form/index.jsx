@@ -3,7 +3,7 @@ import styles from './textarea.scss'
 import Paper from 'material-ui/Paper'
 import IconButton from 'material-ui/IconButton'
 import classnames from 'classnames'
-import { addNote, openTodoForm } from 'core/actions'
+import { addNote, openTodoForm, hideTodoForm, removeTodos } from 'core/actions'
 import { connect } from 'react-redux'
 import TodoForm from 'components/todo_form'
 import TodoList from 'components/todo_list'
@@ -24,15 +24,17 @@ let input = ''
 
 const mapStateToProps = (state) => {
   return {
-    noteFormOpen : state.view.noteFormOpen,
-    todos : state.notes.todos
+    todoFormOpen : state.view.todoFormOpen,
+    todos: state.todos
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddClick: (title, text, todos) => dispatch(addNote(title, text, todos)),
-    openTodoForm: () => dispatch(openTodoForm())
+    openTodoForm: () => dispatch(openTodoForm()),
+    hideTodoForm: () => dispatch(hideTodoForm()),
+    removeTodos: () => dispatch(removeTodos())
   }
 }
 
@@ -99,8 +101,9 @@ class AddNoteForm extends React.Component {
     )
   }
 
+
   render() {
-    const {onAddClick, openTodoForm, noteFormOpen} = this.props
+    const { onAddClick, openTodoForm, hideTodoForm, todos } = this.props
     return (
       <div>
         <Paper style={noteStyle} zDepth={1}>
@@ -111,7 +114,7 @@ class AddNoteForm extends React.Component {
           />
           <div
             style={{
-              display: noteFormOpen ? 'block' : 'none',
+              display: 'block',
               position: 'relative'
             }}
           >
@@ -119,22 +122,22 @@ class AddNoteForm extends React.Component {
             {this.getGhostField()}
           </div>
           <TodoForm />
-          <TodoList />
+          <TodoList todos={todos} />
           <div className={styles.footer}>Action buttons go here
             <IconButton
               iconClassName='material-icons'
               iconStyle={{color: '#777'}}
               onClick={() => {
-                onAddClick(input.value || 'No title', anchor.value, this.props.todos)
+                onAddClick(input.value || 'No title', anchor.value || '', todos)
                 input.value = ''
                 anchor.value = ''
-                console.log(this.props.todos)
+                hideTodoForm()
               }}
             >
               done
             </IconButton>
             <IconButton
-              style={{display: noteFormOpen ? 'flex' : 'none'}}
+              style={{display: 'flex'}}
               iconClassName='material-icons'
               iconStyle={{color: '#777'}}
               onClick={openTodoForm}

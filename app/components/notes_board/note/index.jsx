@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './note.scss'
+import TodoList from 'components/todo_list'
 
 class Note extends React.Component {
 
@@ -7,10 +8,11 @@ class Note extends React.Component {
     const { note } = this.props
     return (
       <div>
-        <p className={styles.noteItem}>
+        <div className={styles.noteItem}>
           <span className={styles.noteTitle}>{note.title}</span>
           <span className={styles.noteText}>{note.text}</span>
-        </p>
+          <TodoList todos={note.todos} />
+        </div>
       </div>
     )
   }

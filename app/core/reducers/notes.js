@@ -2,45 +2,27 @@ import {
   ADD_NOTE,
   ADD_TODO,
   TOGGLE_TODO,
-  DELETE_TODO
+  DELETE_TODO,
+  REMOVE_TODOS
 } from 'core/actions'
 
 const initialViewState = {
   notes: [],
-  todo: {
-    id: 0,
-    text: '',
-    completed: false
-  },
   note: {
     id: 0,
     title: 'No title',
     text: '',
-    todos: [
-    ]
+    todos: []
   }
 }
 
-const todo = (state=initialViewState.todo, action) => {
-  switch (action.type) {
-    case ADD_TODO:
-      console.log(state.note.todos)
-      return {
-        id: state.note.id + action.id,
-        text: action.text,
-        completed: false
-      }
-    case TOGGLE_TODO:
-      if (state.id !== action.id) {
-        return state
-      }
-      return {
-        ...state,
-        completed: !state.completed
-      }
-    default:
-      return state
-  }
+const toggleThisTodo = (todos, id) => {
+  return todos.map((todo) => {
+    if (todo.id === action.id) {
+      todo.completed = !todo.completed
+    }
+    return todo
+  })
 }
 
 const note = (state=initialViewState.note, action) => {
@@ -50,46 +32,20 @@ const note = (state=initialViewState.note, action) => {
         id: action.id,
         title: action.title,
         text: action.text,
-        todos: action.todos
+        todos: (action.todos.length !== 0) ? action.todos.slice() : []
       }
-      case ADD_TODO:
-        return {
-          ...state,
-          todos: [
-            ...state.note.todos,
-            todo(state, action)
-          ]
-        }
-      // case TOGGLE_TODO:
-      //   return {
-      //     ...state,
-      //     // todo:
-      //     //   (state.id !== action.id) ? state :
-      //     //     {
-      //     //       ...state,
-      //     //       completed: !state.completed
-      //     //     },
-      //     todos: state.todos
-      //       .filter(todo => todo.id === action.id)
-      //       .map(todo.completed == !state.note.todocompleted)
-      //   }
-      // case DELETE_TODO:
-      //   return {
-      //     ...state,
-      //     todos: state.todos.filter(todo => todo.id !== action.id)
-      //   }
-      case TOGGLE_TODO:
-        return {
-          ...state,
-          todos: state.note.todos.map(t => todo(t, action))
-        }
-      case DELETE_TODO:
-        return {
-          ...state,
-          todos: state.notetodos.filter(todo => todo.id !== action.id)
-        }
-      default:
-        return state
+    case TOGGLE_TODO:
+      return {
+        ...state,
+        todos: toggleThisTodo(state.todos, action.id)
+      }
+    case DELETE_TODO:
+      return {
+        ...state,
+        todos: state.todos.filter(todo => todo.id !== action.id)
+      }
+    default:
+      return state
   }
 }
 
