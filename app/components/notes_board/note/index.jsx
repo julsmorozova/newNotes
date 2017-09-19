@@ -1,17 +1,32 @@
 import React from 'react'
 import styles from './note.scss'
-import TodoList from 'components/todo_list'
-import { toggleNoteTodo, deleteNoteTodo } from 'core/actions'
-import { connect } from 'react-redux'
+import {List, ListItem} from 'material-ui/List'
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleNoteTodo: (id) => dispatch(toggleNoteTodo(id)),
-    deleteNoteTodo: (id) => dispatch(deleteNoteTodo(id))
-  }
+const itemStyles = {
+  backgroundColor: '#fff',
+  display: 'flex',
+  width: '100%',
+  alignItems: 'center',
+  margin: '0.25rem 0',
+  padding: '0 0.5rem',
+
 }
 
 class Note extends React.Component {
+
+  makeList() {
+    if (this.props.note.todos) {
+      return this.props.note.todos.map(todo => {
+        return (
+          <ListItem style={itemStyles} key={todo.id}
+            primaryText={todo.text}
+            innerDivStyle={{wordBreak: 'break-word', padding: '0.5rem'}}
+          />
+        )
+      })
+    }
+    return ''
+  }
 
   render() {
     const { note } = this.props
@@ -26,11 +41,13 @@ class Note extends React.Component {
           >
             {note.text}
           </span>
-          <TodoList todos={note.todos} toggleTodo={this.props.toggleNoteTodo} deleteTodo={this.props.deleteNoteTodo} />
+          <div className={styles.todoList}>
+            {this.makeList()}
+          </div>
         </div>
       </div>
     )
   }
 }
 
-export default connect(null, mapDispatchToProps)(Note)
+export default Note
