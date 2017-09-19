@@ -21,9 +21,8 @@ class Note extends React.Component {
         <div className={styles.noteItem}>
           <span className={styles.noteTitle}>{note.title}</span>
           <span className={styles.noteText}
-            style={note.todos ?
-              note.Text ? {display: 'block'} : {display: 'none'} :
-              {display: 'block'}}
+            style={!note.todos ? {display: 'flex'} :
+              note.text ? {display: 'flex'} : {display: 'none'}}
           >
             {note.text}
           </span>

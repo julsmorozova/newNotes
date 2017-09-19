@@ -38,6 +38,8 @@ class TodoForm extends React.Component {
         <IconButton
           iconClassName='material-icons'
           iconStyle={{color: '#777'}}
+          tooltip='Add item'
+          tooltipStyles={{marginTop: '-0.7rem'}}
           onClick={() => {
             addTodo(task.value)
             task.value = ''

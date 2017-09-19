@@ -68,6 +68,10 @@ class AddNoteForm extends React.Component {
     }
   }
 
+  clearField() {
+
+  }
+
   getExpandableField() {
     const isOneLine = this.state.height <= DEFAULT_HEIGHT
     const { height } = this.state
@@ -127,17 +131,20 @@ class AddNoteForm extends React.Component {
           <div className={styles.footer}>
             <IconButton
               tooltip='Add list'
-              style={{display: 'flex'}}
+              tooltipStyles={{marginTop: '-0.7rem'}}
+              style={{display: 'flex', width: '2rem', height: '1.5rem', padding: 0, margin: '0 0.3rem'}}
               iconClassName='material-icons'
-              iconStyle={{color: '#777'}}
+              iconStyle={{color: '#777', padding: '0 0.3rem'}}
               onClick={openTodoForm}
             >
               list
             </IconButton>
             <IconButton
+              style={{height: '2rem', padding: '0 0.3rem', margin: '0 0.3rem'}}
               iconClassName='material-icons'
-              iconStyle={{color: '#777'}}
+              iconStyle={{color: '#777', padding: 0}}
               tooltip='Save note'
+              tooltipStyles={{marginTop: '-0.7rem'}}
               onClick={() => {
                 onAddClick(input.value || '', anchor.value || '', todos)
                 input.value = ''
