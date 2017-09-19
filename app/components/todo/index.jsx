@@ -26,7 +26,9 @@ class Todo extends React.Component {
           onClick={() => (toggleTodo(todo.id))}
           style={{
             textDecoration: todo.completed ? 'line-through' : 'none',
-            color: '#202020'
+            color: '#202020',
+            wordWrap: 'break-word',
+            width: '90%'
           }}
         >
           {todo.text}

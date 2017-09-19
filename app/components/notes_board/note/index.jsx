@@ -20,7 +20,13 @@ class Note extends React.Component {
       <div>
         <div className={styles.noteItem}>
           <span className={styles.noteTitle}>{note.title}</span>
-          <span className={styles.noteText}>{note.text}</span>
+          <span className={styles.noteText}
+            style={note.todos ?
+              note.Text ? {display: 'block'} : {display: 'none'} :
+              {display: 'block'}}
+          >
+            {note.text}
+          </span>
           <TodoList todos={note.todos} toggleTodo={this.props.toggleNoteTodo} deleteTodo={this.props.deleteNoteTodo} />
         </div>
       </div>

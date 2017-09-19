@@ -124,7 +124,7 @@ class AddNoteForm extends React.Component {
           </div>
           <TodoForm />
           <TodoList todos={todos} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
-          <div className={styles.footer}>Action buttons go here
+          <div className={styles.footer}>
             <IconButton
               tooltip='Add list'
               style={{display: 'flex'}}
