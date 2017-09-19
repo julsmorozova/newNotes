@@ -3,7 +3,7 @@ import styles from './textarea.scss'
 import Paper from 'material-ui/Paper'
 import IconButton from 'material-ui/IconButton'
 import classnames from 'classnames'
-import { addNote, openTodoForm, hideTodoForm, removeTodos } from 'core/actions'
+import { addNote, openTodoForm, hideTodoForm, removeTodos, toggleTodo, deleteTodo } from 'core/actions'
 import { connect } from 'react-redux'
 import TodoForm from 'components/todo_form'
 import TodoList from 'components/todo_list'
@@ -34,7 +34,9 @@ const mapDispatchToProps = (dispatch) => {
     onAddClick: (title, text, todos) => dispatch(addNote(title, text, todos)),
     openTodoForm: () => dispatch(openTodoForm()),
     hideTodoForm: () => dispatch(hideTodoForm()),
-    removeTodos: () => dispatch(removeTodos())
+    removeTodos: () => dispatch(removeTodos()),
+    toggleTodo: (id) => dispatch(toggleTodo(id)),
+    deleteTodo: (id) => dispatch(deleteTodo(id))
   }
 }
 
@@ -101,7 +103,6 @@ class AddNoteForm extends React.Component {
     )
   }
 
-
   render() {
     const { onAddClick, openTodoForm, hideTodoForm, todos } = this.props
     return (
@@ -122,27 +123,29 @@ class AddNoteForm extends React.Component {
             {this.getGhostField()}
           </div>
           <TodoForm />
-          <TodoList todos={todos} />
+          <TodoList todos={todos} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
           <div className={styles.footer}>Action buttons go here
             <IconButton
-              iconClassName='material-icons'
-              iconStyle={{color: '#777'}}
-              onClick={() => {
-                onAddClick(input.value || 'No title', anchor.value || '', todos)
-                input.value = ''
-                anchor.value = ''
-                hideTodoForm()
-              }}
-            >
-              done
-            </IconButton>
-            <IconButton
+              tooltip='Add list'
               style={{display: 'flex'}}
               iconClassName='material-icons'
               iconStyle={{color: '#777'}}
               onClick={openTodoForm}
             >
               list
+            </IconButton>
+            <IconButton
+              iconClassName='material-icons'
+              iconStyle={{color: '#777'}}
+              tooltip='Save note'
+              onClick={() => {
+                onAddClick(input.value || '', anchor.value || '', todos)
+                input.value = ''
+                anchor.value = ''
+                hideTodoForm()
+              }}
+            >
+              done
             </IconButton>
           </div>
         </Paper>

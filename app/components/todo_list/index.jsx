@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteTodo } from 'core/actions'
+// import { deleteTodo } from 'core/actions'
 import Todo from 'components/todo'
 import styles from './todo_list.scss'
 
@@ -10,11 +10,11 @@ import styles from './todo_list.scss'
 //   }
 // }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteTodo: (id) => dispatch(deleteTodo(id))
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     deleteTodo: (id) => dispatch(deleteTodo(id))
+//   }
+// }
 
 
 class TodoList extends React.Component {
@@ -23,7 +23,7 @@ class TodoList extends React.Component {
     if (this.props.todos) {
       return this.props.todos.map(todo => {
         return (
-          <Todo key={todo.id} todo={todo} deleteTodo={this.props.deleteTodo} />
+          <Todo key={todo.id} todo={todo} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
         )
       })
     }
@@ -39,4 +39,4 @@ class TodoList extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(TodoList)
+export default TodoList

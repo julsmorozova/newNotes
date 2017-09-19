@@ -2,7 +2,6 @@ import {
   ADD_TODO,
   TOGGLE_TODO,
   DELETE_TODO,
-  REMOVE_TODOS,
   ADD_NOTE
 } from 'core/actions'
 
