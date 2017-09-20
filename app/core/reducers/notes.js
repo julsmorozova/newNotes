@@ -1,5 +1,6 @@
 import {
   ADD_NOTE,
+  DELETE_NOTE,
   TOGGLE_NOTE_TODO,
   DELETE_NOTE_TODO
 } from 'core/actions'
@@ -55,6 +56,8 @@ const notes = (state=initialViewState.notes, action) => {
         ...state,
         note(state, action)
       ]
+    case DELETE_NOTE:
+      return state.filter(note => note.id !== action.id)
     default:
       return state
   }

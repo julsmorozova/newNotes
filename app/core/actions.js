@@ -9,7 +9,7 @@ export const HIDE_TODO_FORM = 'HIDE_TODO_FORM'
 export const REMOVE_TODOS = 'REMOVE_TODOS'
 export const TOGGLE_NOTE_TODO = 'TOGGLE_NOTE_TODO'
 export const DELETE_NOTE_TODO = 'DELETE_NOTE_TODO'
-// export const DELETE_NOTE = 'DELETE_NOTE'
+export const DELETE_NOTE = 'DELETE_NOTE'
 let nextTodoId = 0
 let newId = 0
 
@@ -60,7 +60,9 @@ export const deleteNoteTodo = (payload) => ({ type: DELETE_NOTE_TODO, ...payload
 export const openTodoForm = (payload) => ({ type: OPEN_TODO_FORM, ...payload })
 export const hideTodoForm = (payload) => ({ type: HIDE_TODO_FORM, ...payload })
 
-// export const deleteNote = (payload = {}) => ({
-//   type: DELETE_NOTE,
-//   ...payload
-// })
+export const deleteNote = (id) => {
+  return {
+    type: DELETE_NOTE,
+    id
+  }
+}

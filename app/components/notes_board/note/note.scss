@@ -11,17 +11,18 @@
 }
 
 .noteTitle, .noteText {
-  width: 100%;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
 
 .noteTitle {
   margin-bottom: 0.3rem;
+  width: 94%;
 }
 
 .noteText {
   background-color: #fff;
+  width: 100%;
   color: #737373;
   font-size: 0.85rem;
   padding: 0.5rem;

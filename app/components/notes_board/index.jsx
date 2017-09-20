@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './notesBoard.scss'
 import Note from './note'
-import { connect } from 'react-redux'
 import AddNoteForm from 'components/add_note_form'
 
 const noteStyle = {
@@ -13,20 +12,17 @@ const noteStyle = {
   margin: '0 1rem 1rem 0'
 }
 
-const mapStateToProps = (state) => {
-  return {
-    notes: state.notes
-  }
-}
-
 class NotesBoard extends React.Component {
 
   makeNote() {
-    return this.props.notes.map(note => {
-      return (
-        <Note key={note.id} note={note} />
-      )
-    })
+    if (this.props.notes) {
+      return this.props.notes.map(note => {
+        return (
+          <Note key={note.id} note={note} deleteNote={this.props.deleteNote} />
+        )
+      })
+    }
+    return ''
   }
 
   render() {
@@ -39,4 +35,4 @@ class NotesBoard extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, null)(NotesBoard)
+export default NotesBoard

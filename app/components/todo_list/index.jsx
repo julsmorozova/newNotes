@@ -1,21 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { deleteTodo } from 'core/actions'
 import Todo from 'components/todo'
 import styles from './todo_list.scss'
-
-// const mapStateToProps = (state) => {
-//   return {
-//     notes: state.notes
-//   }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     deleteTodo: (id) => dispatch(deleteTodo(id))
-//   }
-// }
-
 
 class TodoList extends React.Component {
 

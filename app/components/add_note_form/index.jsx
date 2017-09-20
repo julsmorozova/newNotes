@@ -68,10 +68,6 @@ class AddNoteForm extends React.Component {
     }
   }
 
-  clearField() {
-
-  }
-
   getExpandableField() {
     const isOneLine = this.state.height <= DEFAULT_HEIGHT
     const { height } = this.state
