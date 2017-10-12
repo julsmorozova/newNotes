@@ -21,9 +21,7 @@ class Todo extends React.Component {
     const { todo, toggleTodo, completed, deleteTodo } = this.props
     return (
       <div className={styles.todoItem}>
-        <a
-          key={todo.id}
-          onClick={() => (toggleTodo(todo.id))}
+        <a onClick={() => (toggleTodo(todo.id))}
           style={{
             textDecoration: todo.completed ? 'line-through' : 'none',
             wordWrap: 'break-word',

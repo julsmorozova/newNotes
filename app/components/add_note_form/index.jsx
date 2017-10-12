@@ -34,7 +34,6 @@ const mapDispatchToProps = (dispatch) => {
     onAddClick: (title, text, todos) => dispatch(addNote(title, text, todos)),
     openTodoForm: () => dispatch(openTodoForm()),
     hideTodoForm: () => dispatch(hideTodoForm()),
-    removeTodos: () => dispatch(removeTodos()),
     toggleTodo: (id) => dispatch(toggleTodo(id)),
     deleteTodo: (id) => dispatch(deleteTodo(id))
   }

@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import Todo from 'components/todo'
 import styles from './todo_list.scss'
 
@@ -9,7 +8,7 @@ class TodoList extends React.Component {
     if (this.props.todos) {
       return this.props.todos.map(todo => {
         return (
-          <Todo key={todo.id} todo={todo} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
+          <Todo key={todo.text} todo={todo} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
         )
       })
     }

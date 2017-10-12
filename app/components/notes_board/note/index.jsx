@@ -1,8 +1,8 @@
 import React from 'react'
 import styles from './note.scss'
+import { deleteNote, deleteNoteTodo, toggleNoteTodo } from 'core/actions'
 import { connect } from 'react-redux'
-import { deleteNote } from 'core/actions'
-import {List, ListItem} from 'material-ui/List'
+import NoteList from 'components/note_list'
 import IconButton from 'material-ui/IconButton'
 
 const itemStyles = {
@@ -21,33 +21,33 @@ const iconStyle = {
   fontSize: '1rem'
 }
 
+const noteItem = {
+  backgroundColor: '#eee',
+  display: 'flex',
+  width: '100%',
+  flexWrap: 'wrap',
+  padding: '1rem 0.8rem',
+  width: '18.75rem',
+  margin: '0 1rem 1rem 0',
+  boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px',
+  borderRadius: '0.125rem'
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteNote: (id) => dispatch(deleteNote(id))
+    deleteNote: (id) => dispatch(deleteNote(id)),
+    toggleNoteTodo: (id) => dispatch(toggleNoteTodo(id)),
+    deleteNoteTodo: (id) => dispatch(deleteNoteTodo(id))
   }
 }
 
 class Note extends React.Component {
-
-  makeList() {
-    if (this.props.note.todos) {
-      return this.props.note.todos.map(todo => {
-        return (
-          <ListItem style={itemStyles} key={todo.id}
-            primaryText={todo.text}
-            innerDivStyle={{wordBreak: 'break-word', padding: '0.5rem'}}
-          />
-        )
-      })
-    }
-    return ''
-  }
-
   render() {
-    const { note, deleteNote } = this.props
-    console.log(note.todos)
+    const { note, deleteNote, deleteNoteTodo, toggleNoteTodo } = this.props
+    // console.log(note)
+    // console.log(note.noteTodos)
     return (
-      <div className={styles.noteItem}>
+      <div style={noteItem}>
         <span className={styles.noteTitle}>{note.title}</span>
         <IconButton
           iconClassName='material-icons'
@@ -64,11 +64,11 @@ class Note extends React.Component {
           {note.text}
         </span>
         <div className={styles.todoList}>
-          {this.makeList()}
+          <NoteList noteTodos={note.noteTodos} toggleNoteTodo={toggleNoteTodo} deleteNoteTodo={deleteNoteTodo} />
         </div>
       </div>
     )
   }
 }
 
-export default connect(null, mapDispatchToProps) (Note)
+export default connect(null, mapDispatchToProps)(Note)
