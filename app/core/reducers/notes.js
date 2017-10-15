@@ -50,6 +50,20 @@ const notesState = (state = initialViewState, action) => {
         ...state,
         notes: state.notes.filter(note => note.id !== action.id)
       }
+    case TOGGLE_NOTE_TODO:
+      return {
+        ...state,
+        notes: state.notes.map(function(note) {
+            for(let todoLn = note.noteTodos.length, t = 0; t < todoLn; t++ ) {
+        			if (note.noteTodos[t].id === action.id) {
+                return {...note, noteTodos: note.noteTodos.map(todo => todo.id === action.id ?
+                  {...todo, completed: !todo.completed} : todo
+                )}
+              }
+            }
+            return note
+        })
+      }
     case DELETE_NOTE_TODO:
       console.log(state)
       return {
