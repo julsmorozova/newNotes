@@ -8,7 +8,7 @@ import { deleteNote } from 'core/actions'
 
 const mapStateToProps = (state) => {
   return {
-    notes: state.notes
+    notes: state.notesState.notes
   }
 }
 

@@ -64,7 +64,7 @@ class Note extends React.Component {
           {note.text}
         </span>
         <div className={styles.todoList}>
-          <NoteList noteTodos={note.noteTodos} toggleNoteTodo={toggleNoteTodo} deleteNoteTodo={deleteNoteTodo} />
+          <NoteList noteTodos={note.noteTodos} toggleNoteTodo={toggleNoteTodo} deleteNoteTodo={deleteNoteTodo} noteId={note.id} />
         </div>
       </div>
     )

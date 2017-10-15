@@ -6,13 +6,7 @@ import {
 } from 'core/actions'
 
 const initialViewState = {
-  notes: [],
-  note: {
-    id: 0,
-    title: 'No title',
-    text: '',
-    noteTodos: []
-  }
+  notes: []
 }
 
 // const toggleThisTodo = (noteTodos, id) => {
@@ -25,70 +19,53 @@ const initialViewState = {
 //   })
 // }
 
-const noteTodo = (state = initialViewState.noteTodo, action) => {
-  switch(action.type) {
-    case TOGGLE_NOTE_TODO:
-      console.log(state)
-      if (state.id !== action.id) {
-        return state
-      }
-      return {
-        ...state,
-        completed: !state.completed
-      }
-    default:
-      return state
-  }
+function findNoteIndex(notes, searchID) {
+	for(let notesLn = notes.length, n = 0; n < notesLn; n++ ) {
+		for(let todoLn = notes[n].noteTodos.length, t = 0; t < todoLn; t++ ) {
+			if (notes[n].noteTodos[t].id === searchID) {
+				return n
+			}
+		}
+	}
+	return null
 }
 
-const note = (state = initialViewState.note, action) => {
+const notesState = (state = initialViewState, action) => {
   switch(action.type) {
     case ADD_NOTE:
       return {
-        id: action.id,
-        title: action.title ? action.title : 'Note ' + (action.id + 1),
-        text: action.text,
-        noteTodos: (action.todos.length !==0) ? action.todos.slice() : []
-      }
-    // case TOGGLE_NOTE_TODO:
-    //   return {
-    //     ...state,
-    //     noteTodos: state.noteTodos.map(t => todo(t, action))
-    //   }
-    case DELETE_NOTE_TODO:
-      console.log(state.noteTodos)
-      return {
         ...state,
-        noteTodos: state.noteTodos.filter(noteTodo => noteTodo.id !== action.id)
+        notes: [
+          ...state.notes,
+          {
+            id: action.id,
+            title: action.title ? action.title : 'Note ' + (action.id + 1),
+            text: action.text,
+            noteTodos: (action.todos.length !==0) ? action.todos.slice() : []
+          }
+        ]
       }
-    default:
-      return state
-  }
-}
-
-
-const notes = (state = initialViewState.notes, action) => {
-  switch(action.type) {
-    case ADD_NOTE:
-      return [
-        ...state,
-        note(state, action)
-      ]
-    // case DELETE_NOTE_TODO:
-    //   return [
-    //     ...state
-    //   ]
-    // case TOGGLE_NOTE_TODO:
-    //   return [
-    //     ...state,
-    //     note(state.noteTodos, action)
-    //   ]
     case DELETE_NOTE:
-      return state.filter(note => note.id !== action.id)
+      return {
+        ...state,
+        notes: state.notes.filter(note => note.id !== action.id)
+      }
+    case DELETE_NOTE_TODO:
+      console.log(state)
+      return {
+        ...state,
+        notes: state.notes.map(function(note) {
+            for(let todoLn = note.noteTodos.length, t = 0; t < todoLn; t++ ) {
+        			if (note.noteTodos[t].id === action.id) {
+                return {...note, noteTodos: note.noteTodos.filter(todo => todo.id !== action.id)}
+              }
+            }
+            return note
+        })
+      }
     default:
       return state
   }
 }
 
-export { note as note }
-export default notes
+export default notesState

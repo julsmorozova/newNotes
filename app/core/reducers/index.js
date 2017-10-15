@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux'
 import todos from './todos'
 import header from './header'
-import { note } from './notes'
-import notes from './notes'
+import notesState from './notes'
 import view from './view'
 
 const reducers = combineReducers({
   header,
-  note,
-  notes,
+  notesState,
   todos,
   view
 })

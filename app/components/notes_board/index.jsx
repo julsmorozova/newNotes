@@ -18,7 +18,7 @@ class NotesBoard extends React.Component {
     if (this.props.notes) {
       return this.props.notes.map(note => {
         return (
-          <Note key={note.text.substring(3, 8) + Math.random()} note={note} deleteNote={this.props.deleteNote} />
+          <Note key={note.id + Math.random()} note={note} deleteNote={this.props.deleteNote} />
         )
       })
     }
