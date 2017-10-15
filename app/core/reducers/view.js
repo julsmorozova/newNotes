@@ -1,8 +1,9 @@
-import { OPEN_TODO_FORM, HIDE_TODO_FORM } from 'core/actions'
+import { OPEN_TODO_FORM, HIDE_TODO_FORM, ENABLE_EDIT, COMPLETE_EDIT } from 'core/actions'
 
 const initialViewState = {
-  todoFormOpen: false
-  // noteFormOpen: true
+  todoFormOpen: false,
+  editable: false,
+  textChanged: false
 }
 
 const view = (state=initialViewState, action) => {
@@ -10,19 +11,22 @@ const view = (state=initialViewState, action) => {
     case OPEN_TODO_FORM:
       return {...state,
         todoFormOpen: true
-        // noteFormOpen: state.todoFormOpen && state.noteFormOpen
       }
-      case HIDE_TODO_FORM:
-        return {...state,
-          todoFormOpen: false
-          // noteFormOpen: state.todoFormOpen && state.noteFormOpen
-        }
-    // case HIDE_NOTE_FORM:
-    //   return {
-    //     ...state,
-    //     noteFormOpen: !state.noteFormOpen,
-    //     todoFormOpen: state.noteFormOpen && state.todoFormOpen
-    //   }
+    case HIDE_TODO_FORM:
+      return {...state,
+        todoFormOpen: false
+      }
+    case ENABLE_EDIT:
+      return {
+        ...state,
+        editable: true
+      }
+    case COMPLETE_EDIT:
+      return {
+        ...state,
+        editable: false,
+        textChanged: true
+      }
     default:
       return state
   }

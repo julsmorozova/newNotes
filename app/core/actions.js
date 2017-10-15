@@ -8,6 +8,9 @@ export const HIDE_TODO_FORM = 'HIDE_TODO_FORM'
 export const TOGGLE_NOTE_TODO = 'TOGGLE_NOTE_TODO'
 export const DELETE_NOTE_TODO = 'DELETE_NOTE_TODO'
 export const DELETE_NOTE = 'DELETE_NOTE'
+export const EDIT_NOTE_TEXT = 'EDIT_NOTE_TEXT'
+export const ENABLE_EDIT = 'ENABLE_EDIT'
+export const COMPLETE_EDIT = 'COMPLETE_EDIT'
 let nextTodoId = 0
 let newId = 0
 
@@ -44,6 +47,17 @@ export const addNote = (title, text, todos) => {
     todos
   }
 }
+
+export const editNoteText = (id, text) => {
+  return {
+    type: EDIT_NOTE_TEXT,
+    id,
+    text
+  }
+}
+
+export const enableEdit = (payload) => ({ type: ENABLE_EDIT, ...payload })
+export const completeEdit = (payload) => ({ type: COMPLETE_EDIT, ...payload })
 
 export const toggleNoteTodo = (id, ...payload) => {
   return {

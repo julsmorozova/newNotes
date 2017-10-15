@@ -2,7 +2,8 @@ import {
   ADD_NOTE,
   DELETE_NOTE,
   TOGGLE_NOTE_TODO,
-  DELETE_NOTE_TODO
+  DELETE_NOTE_TODO,
+  EDIT_NOTE_TEXT
 } from 'core/actions'
 
 const initialViewState = {
@@ -44,6 +45,13 @@ const notesState = (state = initialViewState, action) => {
             noteTodos: (action.todos.length !==0) ? action.todos.slice() : []
           }
         ]
+      }
+    case EDIT_NOTE_TEXT:
+      return {
+        ...state,
+        notes: state.notes.map(note => note.id === action.id ?
+          {...note, text: action.text} : note
+        )
       }
     case DELETE_NOTE:
       return {
