@@ -4,9 +4,7 @@ import {
   deleteNote,
   deleteNoteTodo,
   toggleNoteTodo,
-  editNoteText,
-  enableEdit,
-  completeEdit
+  editNoteText
 } from 'core/actions'
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
@@ -40,22 +38,12 @@ const noteItem = {
   borderRadius: '0.125rem'
 }
 
-
-const mapStateToProps = (state) => {
-  return {
-    editable : state.view.editable,
-    textChanged: state.view.textChanged
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteNote: (id) => dispatch(deleteNote(id)),
     toggleNoteTodo: (id) => dispatch(toggleNoteTodo(id)),
     deleteNoteTodo: (id) => dispatch(deleteNoteTodo(id)),
-    onCompleteClick: (id, text) => dispatch(editNoteText(id, text)),
-    enableEdit: () => dispatch(enableEdit()),
-    completeEdit: () => dispatch(completeEdit())
+    onCompleteClick: (id, text) => dispatch(editNoteText(id, text))
   }
 }
 
@@ -63,13 +51,28 @@ class Note extends React.Component {
   constructor(props) {
    super(props)
    this.state = {
-     value: props.note.text
+     value: props.note.text,
+     editable: false
    }
+   this.enableEdit = this.enableEdit.bind(this)
+   this.completeEdit = this.completeEdit.bind(this)
  }
 
  handleChange = (event) => {
    this.setState({
      value: event.target.value,
+   })
+ }
+
+ enableEdit() {
+   this.setState({
+     editable: true
+   })
+ }
+
+ completeEdit() {
+   this.setState({
+     editable: false
    })
  }
 
@@ -80,12 +83,10 @@ class Note extends React.Component {
       deleteNote,
       deleteNoteTodo,
       toggleNoteTodo,
-      enableEdit,
-      completeEdit,
-      editable,
       onCompleteClick,
       textChanged
     } = this.props
+    const { editable } = this.state
     // console.log(note)
     // console.log(note.noteTodos)
     return (
@@ -107,7 +108,7 @@ class Note extends React.Component {
         </IconButton>
         <div className={styles.noteTextBlock}>
           <span className={styles.noteText}
-            onClick={enableEdit}
+            onClick={this.enableEdit}
             style={!note.todos && !editable ? {display: 'inline-block'} :
               note.text && !editable ? {display: 'inline-block'} : {display: 'none'}}
           >
@@ -124,13 +125,13 @@ class Note extends React.Component {
             iconClassName='material-icons'
             iconStyle={iconStyle}
             tooltip='Done'
-            tooltipStyles={{marginTop: '-1.7rem'}}
+            tooltipStyles={{margin: '-2.5rem 0 0 0.7rem'}}
             onClick={() => {
               onCompleteClick(note.id, this.state.value),
-              completeEdit()
+              this.completeEdit
             }}
             style={{
-              display: !this.props.editable ? 'none': 'flex',
+              display: !editable ? 'none': 'flex',
               width: '0.8rem',
               height: '1.5rem',
               padding: 0,
@@ -152,4 +153,4 @@ class Note extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Note)
+export default connect(null, mapDispatchToProps)(Note)
