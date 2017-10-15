@@ -123,6 +123,8 @@ class Note extends React.Component {
           <IconButton
             iconClassName='material-icons'
             iconStyle={iconStyle}
+            tooltip='Done'
+            tooltipStyles={{marginTop: '-1.7rem'}}
             onClick={() => {
               onCompleteClick(note.id, this.state.value),
               completeEdit()
