@@ -1,9 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import IconButton from 'material-ui/IconButton'
+// import TextField from 'material-ui/TextField'
 import styles from './todo_form.scss'
 
 let task = ''
+
+// const hintStyle = {
+//
+// }
+//
+// const inputStyle= {
+//
+// }
 
 class TodoForm extends React.Component {
   constructor(props) {
@@ -25,6 +34,14 @@ class TodoForm extends React.Component {
     })
   }
 
+  handleFocus = (event) => {
+    event.target.parentElement.style.borderBottom = '0.125rem solid #00BCD4'
+  }
+
+  handleBlur = (event) => {
+    event.target.parentElement.style.borderBottom = '0.0625rem solid #e0e0e0'
+  }
+
   render() {
     const { todoFormOpen, action, action2, noteId } = this.props
     const { value } = this.state
@@ -41,6 +58,8 @@ class TodoForm extends React.Component {
           value={value}
           onChange={this.handleChange}
           onClick={this.clearInput}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
         />
         <IconButton
           type='reset'

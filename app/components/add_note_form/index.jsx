@@ -87,7 +87,8 @@ class AddNoteForm extends React.Component {
           className={styles.textarea}
           name='textarea'
           id='textarea'
-          autoFocus={true}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
           defaultValue={''}
           style={{
             height,
@@ -113,6 +114,14 @@ class AddNoteForm extends React.Component {
     )
   }
 
+  handleFocus = (event) => {
+    event.target.style.borderBottom = '0.125rem solid #00BCD4'
+  }
+
+  handleBlur = (event) => {
+    event.target.style.borderBottom = '0.0625rem solid #e0e0e0'
+  }
+
   render() {
     const { onAddClick, todos } = this.props
     const { todoFormOpen } = this.state
@@ -123,6 +132,8 @@ class AddNoteForm extends React.Component {
             className={styles.titleInput}
             ref={node => {input = node}}
             placeholder='Add title...'
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
           />
           <div
             style={{

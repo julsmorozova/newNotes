@@ -10,7 +10,6 @@ import {
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
 import IconButton from 'material-ui/IconButton'
-// import TodoList from 'components/todo_list'
 import TodoForm from 'components/todo_form'
 
 const itemStyles = {
@@ -99,8 +98,6 @@ class Note extends React.Component {
       addTodo
     } = this.props
     const { editable, newListShown } = this.state
-    // console.log(note)
-    // console.log(note.noteTodos)
     return (
       <div style={noteItem}>
         <span className={styles.noteTitle}>{note.title}</span>
