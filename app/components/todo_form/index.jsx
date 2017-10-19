@@ -1,16 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { addNoteTodo } from 'core/actions'
 import IconButton from 'material-ui/IconButton'
 import styles from './todo_form.scss'
 
 let task = ''
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addNoteTodo: (noteId, text) => dispatch(addNoteTodo(noteId, text))
-//   }
-// }
 
 class TodoForm extends React.Component {
   constructor(props) {
