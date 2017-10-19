@@ -3,7 +3,7 @@ import styles from './textarea.scss'
 import Paper from 'material-ui/Paper'
 import IconButton from 'material-ui/IconButton'
 import classnames from 'classnames'
-import { addNote, openTodoForm, hideTodoForm, removeTodos, toggleTodo, deleteTodo } from 'core/actions'
+import { addNote, toggleTodo, deleteTodo, addTodo } from 'core/actions'
 import { connect } from 'react-redux'
 import TodoForm from 'components/todo_form'
 import TodoList from 'components/todo_list'
@@ -24,7 +24,6 @@ let input = ''
 
 const mapStateToProps = (state) => {
   return {
-    todoFormOpen : state.view.todoFormOpen,
     todos: state.todos
   }
 }
@@ -32,10 +31,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddClick: (title, text, todos) => dispatch(addNote(title, text, todos)),
-    openTodoForm: () => dispatch(openTodoForm()),
-    hideTodoForm: () => dispatch(hideTodoForm()),
     toggleTodo: (id) => dispatch(toggleTodo(id)),
-    deleteTodo: (id) => dispatch(deleteTodo(id))
+    deleteTodo: (id) => dispatch(deleteTodo(id)),
+    addTodo: (text) => dispatch(addTodo(text))
   }
 }
 
@@ -45,7 +43,8 @@ class AddNoteForm extends React.Component {
     super(props)
 
     this.state = {
-      height: DEFAULT_HEIGHT
+      height: DEFAULT_HEIGHT,
+      todoFormOpen: false
     }
     this.setFilledTextareaHeight = this.setFilledTextareaHeight.bind(this)
   }
@@ -54,6 +53,18 @@ class AddNoteForm extends React.Component {
     this.mounted = true
 
     this.setFilledTextareaHeight()
+  }
+
+  openTodoForm = (event) => {
+    this.setState({
+      todoFormOpen: true
+    })
+  }
+
+  hideTodoForm = (event) => {
+    this.setState({
+      todoFormOpen: false
+    })
   }
 
 
@@ -103,7 +114,8 @@ class AddNoteForm extends React.Component {
   }
 
   render() {
-    const { onAddClick, openTodoForm, hideTodoForm, todos } = this.props
+    const { onAddClick, todos } = this.props
+    const { todoFormOpen } = this.state
     return (
       <div>
         <Paper style={noteStyle} zDepth={1}>
@@ -121,7 +133,7 @@ class AddNoteForm extends React.Component {
             {this.getExpandableField()}
             {this.getGhostField()}
           </div>
-          <TodoForm />
+          <TodoForm todoFormOpen={todoFormOpen} action={this.props.addTodo} />
           <TodoList todos={todos} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
           <div className={styles.footer}>
             <IconButton
@@ -130,7 +142,7 @@ class AddNoteForm extends React.Component {
               style={{display: 'flex', width: '2rem', height: '1.5rem', padding: 0, margin: '0 0.3rem'}}
               iconClassName='material-icons'
               iconStyle={{color: '#777', padding: '0 0.3rem'}}
-              onClick={openTodoForm}
+              onClick={this.openTodoForm}
             >
               list
             </IconButton>
@@ -144,7 +156,7 @@ class AddNoteForm extends React.Component {
                 onAddClick(input.value || '', anchor.value || '', todos)
                 input.value = ''
                 anchor.value = ''
-                hideTodoForm()
+                this.hideTodoForm
               }}
             >
               done

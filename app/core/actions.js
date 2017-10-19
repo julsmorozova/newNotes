@@ -9,12 +9,15 @@ export const TOGGLE_NOTE_TODO = 'TOGGLE_NOTE_TODO'
 export const DELETE_NOTE_TODO = 'DELETE_NOTE_TODO'
 export const DELETE_NOTE = 'DELETE_NOTE'
 export const EDIT_NOTE_TEXT = 'EDIT_NOTE_TEXT'
+export const ADD_NOTE_TODO = 'ADD_NOTE_TODO'
+
 let nextTodoId = 0
 let newId = 0
 
 export const addTodo = (text) => {
   return {
     type: ADD_TODO,
+    noteId: undefined,
     id: nextTodoId++,
     text,
     completed: false //initially set to false
@@ -31,6 +34,14 @@ export const deleteTodo = (id) => {
   return {
     type: DELETE_TODO,
     id
+  }
+}
+export const addNoteTodo = (noteId, text) => {
+  return {
+    type: ADD_NOTE_TODO,
+    id: nextTodoId++,
+    noteId,
+    text
   }
 }
 
@@ -68,9 +79,9 @@ export const deleteNoteTodo = (id) => {
     id
   }
 }
-
-export const openTodoForm = (payload) => ({ type: OPEN_TODO_FORM, ...payload })
-export const hideTodoForm = (payload) => ({ type: HIDE_TODO_FORM, ...payload })
+//
+// export const openTodoForm = (payload) => ({ type: OPEN_TODO_FORM, ...payload })
+// export const hideTodoForm = (payload) => ({ type: HIDE_TODO_FORM, ...payload })
 
 export const deleteNote = (id) => {
   return {

@@ -6,8 +6,8 @@ import view from './view'
 
 const reducers = combineReducers({
   header,
-  notesState,
   todos,
+  notesState,
   view
 })
 

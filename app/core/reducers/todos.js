@@ -2,12 +2,14 @@ import {
   ADD_TODO,
   TOGGLE_TODO,
   DELETE_TODO,
-  ADD_NOTE
+  ADD_NOTE,
+  ADD_NOTE_TODO
 } from 'core/actions'
 
 const initialViewState = {
   todos: [],
   todo: {
+    noteId: undefined,
     id: 0,
     text: '',
     completed: false
@@ -20,7 +22,8 @@ const todo = (state=initialViewState.todo, action) => {
       return {
         id: action.id,
         text: action.text,
-        completed: false
+        completed: false,
+        noteId: undefined
       }
     case TOGGLE_TODO:
       if (state.id !== action.id) {

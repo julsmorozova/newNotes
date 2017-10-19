@@ -1,48 +1,62 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addTodo } from 'core/actions'
+// import { addNoteTodo } from 'core/actions'
 import IconButton from 'material-ui/IconButton'
 import styles from './todo_form.scss'
 
 let task = ''
 
-const mapStateToProps = (state) => {
-  return {
-    todoFormOpen: state.view.todoFormOpen,
-    todos: state.todos
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addTodo: (text) => dispatch(addTodo(text))
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     addNoteTodo: (noteId, text) => dispatch(addNoteTodo(noteId, text))
+//   }
+// }
 
 class TodoForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: ''
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      value: event.target.value
+    })
+  }
+
+  clearInput = (event) => {
+    this.setState({
+      value: ''
+    })
+  }
 
   render() {
-    const { todoFormOpen, addTodo } = this.props
+    const { todoFormOpen, action, action2, noteId } = this.props
+    const { value } = this.state
     return (
       <div
         className={styles.inputContainer}
         style={{
-          display: todoFormOpen ? 'flex' : 'none',
+          display: todoFormOpen ? 'flex' : 'none'
         }}
       >
         <input
           className={styles.todoInput}
-          ref={node => {task = node}}
           placeholder='Add todo item...'
+          value={value}
+          onChange={this.handleChange}
+          onClick={this.clearInput}
         />
         <IconButton
+          type='reset'
           iconClassName='material-icons'
           iconStyle={{color: '#777'}}
           tooltip='Add item'
           tooltipStyles={{marginTop: '-0.7rem'}}
           onClick={() => {
-            addTodo(task.value)
-            task.value = ''
+            action2 ? action2(noteId, this.state.value) : action(this.state.value)
           }}
         >
           done
@@ -52,4 +66,4 @@ class TodoForm extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)
+export default TodoForm

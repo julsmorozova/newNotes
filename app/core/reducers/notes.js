@@ -3,7 +3,8 @@ import {
   DELETE_NOTE,
   TOGGLE_NOTE_TODO,
   DELETE_NOTE_TODO,
-  EDIT_NOTE_TEXT
+  EDIT_NOTE_TEXT,
+  ADD_NOTE_TODO
 } from 'core/actions'
 
 const initialViewState = {
@@ -42,9 +43,26 @@ const notesState = (state = initialViewState, action) => {
             id: action.id,
             title: action.title ? action.title : 'Note ' + (action.id + 1),
             text: action.text,
-            noteTodos: (action.todos.length !==0) ? action.todos.slice() : []
+            noteTodos: (action.todos.length !==0) ? action.todos.slice().map(function(todo) {
+              todo.noteId = action.id
+              return todo
+            }) : []
           }
         ]
+      }
+    case ADD_NOTE_TODO:
+      return {
+        ...state,
+        notes: state.notes.map(note => note.id === action.noteId ?
+          {...note, noteTodos: [...note.noteTodos,
+            {
+              id: action.id,
+              noteId: action.noteId,
+              text: action.text,
+              completed: false
+            }
+          ]} : note
+        )
       }
     case EDIT_NOTE_TEXT:
       return {
