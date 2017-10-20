@@ -125,11 +125,11 @@ class AddNoteForm extends React.Component {
   }
 
   render() {
-    const { onAddClick, todos } = this.props
+    const { onAddClick, todos, listView } = this.props
     const { todoFormOpen } = this.state
     return (
       <div>
-        <Paper style={this.props.listView ? {...noteStyle, width: '30rem'} : noteStyle} zDepth={1}>
+        <Paper style={listView ? {...noteStyle, width: '30rem'} : noteStyle} zDepth={1}>
           <input
             className={styles.titleInput}
             ref={node => {input = node}}

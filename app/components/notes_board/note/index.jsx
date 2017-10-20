@@ -83,7 +83,6 @@ class Note extends React.Component {
  }
 
   render() {
-    console.log(this.props.listView)
     const {
       notes,
       note,
