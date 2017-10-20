@@ -10,18 +10,8 @@ import {
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
 import IconButton from 'material-ui/IconButton'
+import Paper from 'material-ui/Paper'
 import TodoForm from 'components/todo_form'
-
-const itemStyles = {
-  backgroundColor: '#fff',
-  display: 'flex',
-  width: '100%',
-  alignItems: 'center',
-  margin: '0.25rem 0',
-  padding: '0 0.5rem',
-  color: '#777',
-  fontSize: '0.85rem'
-}
 
 const iconStyle = {
   color: '#777',
@@ -38,6 +28,12 @@ const noteItem = {
   margin: '0 1rem 1rem 0',
   boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px',
   borderRadius: '0.125rem'
+}
+
+const mapStateToProps = (state) => {
+  return {
+    listView: state.view.listView
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -87,6 +83,7 @@ class Note extends React.Component {
  }
 
   render() {
+    console.log(this.props.listView)
     const {
       notes,
       note,
@@ -99,86 +96,91 @@ class Note extends React.Component {
     } = this.props
     const { editable, newListShown } = this.state
     return (
-      <div style={noteItem}>
-        <span className={styles.noteTitle}>{note.title}</span>
-        <IconButton
-          iconClassName='material-icons'
-          iconStyle={iconStyle}
-          onClick={() => (deleteNote(note.id))}
-          style={{
-            display: 'flex',
-            width: '0.8rem',
-            height: '1.5rem',
-            padding: 0,
-            margin: '-0.7rem 0'
-          }}
+      <div>
+        <Paper style={this.props.listView ?
+          {...noteItem, width: '30rem'} :
+            noteItem} zDepth={1}
         >
-          clear
-        </IconButton>
-        <div className={styles.noteTextBlock}>
-          <span className={styles.noteText}
-            onClick={this.enableEdit}
-            style={!note.todos && !editable ? {display: 'inline-block'} :
-              note.text && !editable ? {display: 'inline-block'} : {display: 'none'}}
+          <span className={styles.noteTitle}>{note.title}</span>
+          <IconButton
+            iconClassName='material-icons'
+            iconStyle={iconStyle}
+            onClick={() => (deleteNote(note.id))}
+            style={{
+              display: 'flex',
+              width: '0.8rem',
+              height: '1.5rem',
+              padding: 0,
+              margin: '-0.7rem 0'
+            }}
           >
-            {this.state.value}
-          </span>
-          <textarea
-            className={styles.noteText}
-            name='noteTextarea'
-            style={editable ? {display: 'flex'} : {display: 'none'}}
-            onChange={this.handleChange}
-            defaultValue={this.state.value}
-          />
-          <div className={styles.buttonsBlock}>
-            <IconButton
-              iconClassName='material-icons'
-              iconStyle={iconStyle}
-              tooltip='Done'
-              tooltipStyles={{margin: '-1.7rem 0 0 0.7rem'}}
-              onClick={() => {
-                onCompleteClick(note.id, this.state.value),
-                this.completeEdit
-              }}
-              style={{
-                display: !editable ? 'none': 'flex',
-                width: '0.8rem',
-                height: '1.5rem',
-                padding: 0,
-                margin: '0.3rem 0.5rem 0'
-              }}
+            clear
+          </IconButton>
+          <div className={styles.noteTextBlock}>
+            <span className={styles.noteText}
+              onClick={this.enableEdit}
+              style={!note.todos && !editable ? {display: 'inline-block'} :
+                note.text && !editable ? {display: 'inline-block'} : {display: 'none'}}
             >
-              done
-            </IconButton>
-            <IconButton
-              iconClassName='material-icons'
-              iconStyle={iconStyle}
-              tooltip='Add todo list'
-              tooltipStyles={{margin: '-1.7rem 0 0 0.7rem'}}
-              onClick={this.showNewList}
-              style={{
-                display: !editable ? 'none': 'flex',
-                width: '0.8rem',
-                height: '1.5rem',
-                padding: 0,
-                margin: '0.3rem 0.5rem 0'
-              }}
-            >
-              add
-            </IconButton>
+              {this.state.value}
+            </span>
+            <textarea
+              className={styles.noteText}
+              name='noteTextarea'
+              style={editable ? {display: 'flex'} : {display: 'none'}}
+              onChange={this.handleChange}
+              defaultValue={this.state.value}
+            />
+            <div className={styles.buttonsBlock}>
+              <IconButton
+                iconClassName='material-icons'
+                iconStyle={iconStyle}
+                tooltip='Done'
+                tooltipStyles={{margin: '-1.7rem 0 0 0.7rem'}}
+                onClick={() => {
+                  onCompleteClick(note.id, this.state.value),
+                  this.completeEdit
+                }}
+                style={{
+                  display: !editable ? 'none': 'flex',
+                  width: '0.8rem',
+                  height: '1.5rem',
+                  padding: 0,
+                  margin: '0.3rem 0.5rem 0'
+                }}
+              >
+                done
+              </IconButton>
+              <IconButton
+                iconClassName='material-icons'
+                iconStyle={iconStyle}
+                tooltip='Add todo list'
+                tooltipStyles={{margin: '-1.7rem 0 0 0.7rem'}}
+                onClick={this.showNewList}
+                style={{
+                  display: !editable ? 'none': 'flex',
+                  width: '0.8rem',
+                  height: '1.5rem',
+                  padding: 0,
+                  margin: '0.3rem 0.5rem 0'
+                }}
+              >
+                add
+              </IconButton>
+            </div>
           </div>
-        </div>
-        <div className={styles.todoList}>
-          <NoteList noteTodos={note.noteTodos}
-            toggleNoteTodo={toggleNoteTodo}
-            deleteNoteTodo={deleteNoteTodo}
-            noteId={note.id}
-          />
-        </div>
-        <TodoForm todoFormOpen={newListShown} action2={this.props.addNoteTodo} noteId={note.id} />
+          <div className={styles.todoList}>
+            <NoteList noteTodos={note.noteTodos}
+              toggleNoteTodo={toggleNoteTodo}
+              deleteNoteTodo={deleteNoteTodo}
+              noteId={note.id}
+            />
+          </div>
+          <TodoForm todoFormOpen={newListShown} action2={this.props.addNoteTodo} noteId={note.id} />
+        </Paper>
       </div>
     )
   }
 }
 
-export default connect(null, mapDispatchToProps)(Note)
+export default connect(mapStateToProps, mapDispatchToProps)(Note)

@@ -3,8 +3,8 @@ export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const DELETE_TODO = 'DELETE_TODO'
 export const TOGGLE_SETTINGS = 'TOGGLE_SETTINGS'
 export const ADD_NOTE = 'ADD_NOTE'
-export const OPEN_TODO_FORM = 'OPEN_TODO_FORM'
-export const HIDE_TODO_FORM = 'HIDE_TODO_FORM'
+export const SHOW_GRID_VIEW = 'SHOW_GRID_VIEW'
+export const SHOW_LIST_VIEW = 'SHOW_LIST_VIEW'
 export const TOGGLE_NOTE_TODO = 'TOGGLE_NOTE_TODO'
 export const DELETE_NOTE_TODO = 'DELETE_NOTE_TODO'
 export const DELETE_NOTE = 'DELETE_NOTE'
@@ -79,9 +79,9 @@ export const deleteNoteTodo = (id) => {
     id
   }
 }
-//
-// export const openTodoForm = (payload) => ({ type: OPEN_TODO_FORM, ...payload })
-// export const hideTodoForm = (payload) => ({ type: HIDE_TODO_FORM, ...payload })
+
+export const showListView = (payload) => ({ type: SHOW_LIST_VIEW, ...payload })
+export const showGridView = (payload) => ({ type: SHOW_GRID_VIEW, ...payload })
 
 export const deleteNote = (id) => {
   return {

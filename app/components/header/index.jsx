@@ -1,26 +1,52 @@
 import React from 'react'
 import AppBar from 'material-ui/AppBar'
+import IconButton from 'material-ui/IconButton'
 import styles from './header.scss'
 import Hamburger from './hamburger'
 import Settings from '../../components/settings'
-import { toggleSettings } from 'core/actions'
+import { toggleSettings, showListView, showGridView } from 'core/actions'
 import { connect } from 'react-redux'
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleSettings: () => dispatch(toggleSettings())
+    toggleSettings: () => dispatch(toggleSettings()),
+    showListView: () => dispatch(showListView()),
+    showGridView: () => dispatch(showGridView())
   }
 }
 
 class Header extends React.Component {
   render() {
-    const {toggleSettings} = this.props
+    const { toggleSettings, showListView, showGridView } = this.props
     return (
       <div className={styles.headerWrapper}>
         <AppBar
           title='New notes'
           iconElementLeft={<Hamburger {...{toggleSettings}} />}
-        />
+        >
+          <div className={styles.appbarContent}>
+            <IconButton
+              type='reset'
+              iconClassName='material-icons'
+              iconStyle={{color: '#fff'}}
+              tooltip='List view'
+              tooltipStyles={{marginTop: '-0.7rem'}}
+              onClick={showListView}
+            >
+              view_stream
+            </IconButton>
+            <IconButton
+              type='reset'
+              iconClassName='material-icons'
+              iconStyle={{color: '#fff'}}
+              tooltip='Grid view'
+              tooltipStyles={{marginTop: '-0.7rem'}}
+              onClick={showGridView}
+            >
+              view_quilt
+            </IconButton>
+          </div>
+        </AppBar>
       </div>
     )
   }

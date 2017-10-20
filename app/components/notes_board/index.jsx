@@ -1,15 +1,21 @@
 import React from 'react'
-import styles from './notesBoard.scss'
 import Note from './note'
 import AddNoteForm from 'components/add_note_form'
+import { connect } from 'react-redux'
 
-const noteStyle = {
-  width: 300,
+const mapStateToProps = (state) => {
+  return {
+    listView: state.view.listView
+  }
+}
+
+const notesBoardStyles = {
+  width: '80%',
+  margin: '1rem auto',
   display: 'flex',
+  flexWrap: 'wrap',
   justifyContent: 'flex-start',
-  flexDirection: 'column',
-  padding: '0.5rem',
-  margin: '0 1rem 1rem 0'
+  alignItems: 'flex-start'
 }
 
 class NotesBoard extends React.Component {
@@ -27,7 +33,15 @@ class NotesBoard extends React.Component {
 
   render() {
     return (
-      <div className={styles.notesBoard}>
+      <div
+        style={this.props.listView ?
+          {...notesBoardStyles,
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
+            width: '65%'} :
+          notesBoardStyles}
+      >
         <AddNoteForm />
         {this.makeNote()}
       </div>
@@ -35,4 +49,4 @@ class NotesBoard extends React.Component {
   }
 }
 
-export default NotesBoard
+export default connect(mapStateToProps, null)(NotesBoard)

@@ -1,18 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import IconButton from 'material-ui/IconButton'
-// import TextField from 'material-ui/TextField'
 import styles from './todo_form.scss'
 
 let task = ''
-
-// const hintStyle = {
-//
-// }
-//
-// const inputStyle= {
-//
-// }
 
 class TodoForm extends React.Component {
   constructor(props) {

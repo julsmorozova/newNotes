@@ -11,12 +11,13 @@ import TodoList from 'components/todo_list'
 const DEFAULT_HEIGHT = 20
 
 const noteStyle = {
-  width: 300,
+  width: '18.75rem',
   display: 'flex',
   justifyContent: 'flex-start',
   flexDirection: 'column',
   padding: '0.5rem',
-  margin: '0 1rem 1rem 0'
+  margin: '0 1rem 1rem 0',
+  transition: 'none'
 }
 
 let anchor = ''
@@ -24,7 +25,8 @@ let input = ''
 
 const mapStateToProps = (state) => {
   return {
-    todos: state.todos
+    todos: state.todos,
+    listView: state.view.listView
   }
 }
 
@@ -127,7 +129,7 @@ class AddNoteForm extends React.Component {
     const { todoFormOpen } = this.state
     return (
       <div>
-        <Paper style={noteStyle} zDepth={1}>
+        <Paper style={this.props.listView ? {...noteStyle, width: '30rem'} : noteStyle} zDepth={1}>
           <input
             className={styles.titleInput}
             ref={node => {input = node}}
@@ -179,4 +181,4 @@ class AddNoteForm extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (AddNoteForm)
+export default connect(mapStateToProps, mapDispatchToProps)(AddNoteForm)
