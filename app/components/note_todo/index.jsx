@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deleteNoteTodo, toggleNoteTodo } from 'core/actions'
-import IconButton from 'material-ui/IconButton'
+import ActionButton from 'components/action_btn'
 import styles from './note_todo.scss'
 
 const mapDispatchToProps = (dispatch) => {
@@ -31,13 +31,12 @@ class NoteTodo extends React.Component {
         >
           {noteTodo.text}
         </a>
-        <IconButton
-          iconClassName='material-icons'
-          iconStyle={iconStyle}
-          onClick={() => (deleteNoteTodo(noteTodo.id))}
-        >
-          clear
-        </IconButton>
+        <ActionButton
+          icon='clear'
+          iconColor='#777'
+          iconSize='1rem'
+          action={() => (deleteNoteTodo(noteTodo.id))}
+        />
       </div>
     )
   }

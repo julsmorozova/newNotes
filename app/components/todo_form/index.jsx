@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import IconButton from 'material-ui/IconButton'
+import ActionButton from 'components/action_btn'
 import styles from './todo_form.scss'
 
 let task = ''
@@ -52,18 +52,16 @@ class TodoForm extends React.Component {
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
         />
-        <IconButton
-          type='reset'
-          iconClassName='material-icons'
-          iconStyle={{color: '#777'}}
-          tooltip='Add item'
-          tooltipStyles={{marginTop: '-0.7rem'}}
-          onClick={() => {
+        <ActionButton
+          icon='done'
+          iconColor='#777'
+          iconSize='1.5rem'
+          tooltipName='Add item'
+          tooltipVisible
+          action={() => {
             action2 ? action2(noteId, this.state.value) : action(this.state.value)
           }}
-        >
-          done
-        </IconButton>
+        />
       </div>
     )
   }

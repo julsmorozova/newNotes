@@ -1,20 +1,6 @@
 import React from 'react'
-// import { connect } from 'react-redux'
-// import { toggleTodo, deleteTodo } from 'core/actions'
-import IconButton from 'material-ui/IconButton'
+import ActionButton from 'components/action_btn'
 import styles from './todo.scss'
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     toggleTodo: (id) => dispatch(toggleTodo(id)),
-//     deleteTodo: (id) => dispatch(deleteTodo(id))
-//   }
-// }
-
-const iconStyle = {
-  color: '#777',
-  fontSize: '1rem'
-}
 
 class Todo extends React.Component {
   render() {
@@ -30,13 +16,12 @@ class Todo extends React.Component {
         >
           {todo.text}
         </a>
-        <IconButton
-          iconClassName='material-icons'
-          iconStyle={iconStyle}
-          onClick={() => (deleteTodo(todo.id))}
-        >
-          clear
-        </IconButton>
+        <ActionButton
+          icon='clear'
+          iconColor='#777'
+          iconSize='1rem'
+          action={() => (deleteTodo(todo.id))}
+        />
       </div>
     )
   }

@@ -9,8 +9,9 @@ import {
 } from 'core/actions'
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
-import IconButton from 'material-ui/IconButton'
+import ActionButton from 'components/action_btn'
 import Paper from 'material-ui/Paper'
+import IconButton from 'material-ui/IconButton'
 import TodoForm from 'components/todo_form'
 
 const iconStyle = {
@@ -130,43 +131,30 @@ class Note extends React.Component {
               onChange={this.handleChange}
               defaultValue={this.state.value}
             />
-            <div className={styles.buttonsBlock}>
-              <IconButton
-                iconClassName='material-icons'
-                iconStyle={iconStyle}
-                tooltip='Done'
-                tooltipStyles={{margin: '-1.7rem 0 0 0.7rem'}}
-                onClick={() => {
-                  onCompleteClick(note.id, this.state.value),
-                  this.completeEdit
-                }}
-                style={{
-                  display: !editable ? 'none': 'flex',
-                  width: '0.8rem',
-                  height: '1.5rem',
-                  padding: 0,
-                  margin: '0.3rem 0.5rem 0'
-                }}
-              >
-                done
-              </IconButton>
-              <IconButton
-                iconClassName='material-icons'
-                iconStyle={iconStyle}
-                tooltip='Add todo list'
-                tooltipStyles={{margin: '-1.7rem 0 0 0.7rem'}}
-                onClick={this.showNewList}
-                style={{
-                  display: !editable ? 'none': 'flex',
-                  width: '0.8rem',
-                  height: '1.5rem',
-                  padding: 0,
-                  margin: '0.3rem 0.5rem 0'
-                }}
-              >
-                add
-              </IconButton>
-            </div>
+            { editable ?
+              <div className={styles.buttonsBlock}>
+                <ActionButton
+                  icon='done'
+                  iconColor='#777'
+                  iconSize='1.2rem'
+                  tooltipVisible
+                  tooltipName='Done'
+                  action={() => {
+                    onCompleteClick(note.id, this.state.value),
+                    this.completeEdit
+                  }}
+                />
+                <ActionButton
+                  icon='add'
+                  iconColor='#777'
+                  iconSize='1.2rem'
+                  tooltipVisible
+                  tooltipName='Add todo list'
+                  tooltipRight='-90%'
+                  action={this.showNewList}
+                />
+              </div>
+              : '' }
           </div>
           <div className={styles.todoList}>
             <NoteList noteTodos={note.noteTodos}

@@ -1,11 +1,11 @@
 import React from 'react'
 import AppBar from 'material-ui/AppBar'
-import IconButton from 'material-ui/IconButton'
 import styles from './header.scss'
 import Hamburger from './hamburger'
-import Settings from '../../components/settings'
+import Settings from 'components/settings'
 import { toggleSettings, showListView, showGridView } from 'core/actions'
 import { connect } from 'react-redux'
+import ActionButton from 'components/action_btn'
 
 const mapStateToProps = (state) => {
   return {
@@ -32,27 +32,19 @@ class Header extends React.Component {
         >
           <div className={styles.appbarContent}>
             {listView ?
-              <IconButton
-                type='reset'
-                iconClassName='material-icons'
-                iconStyle={{color: '#fff'}}
-                tooltip='Grid view'
-                tooltipStyles={{marginTop: '-0.7rem'}}
-                onClick={showGridView}
-              >
-                view_quilt
-              </IconButton>
+              <ActionButton
+                icon='view_quilt'
+                tooltipVisible
+                tooltipName='Grid view'
+                action={showGridView}
+              />
               :
-              <IconButton
-                type='reset'
-                iconClassName='material-icons'
-                iconStyle={{color: '#fff'}}
-                tooltip='List view'
-                tooltipStyles={{marginTop: '-0.7rem'}}
-                onClick={showListView}
-              >
-                view_stream
-              </IconButton>
+              <ActionButton
+                icon='view_stream'
+                tooltipVisible
+                tooltipName='List view'
+                action={showListView}
+              />
             }
           </div>
         </AppBar>

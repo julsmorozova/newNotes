@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from './textarea.scss'
 import Paper from 'material-ui/Paper'
-import IconButton from 'material-ui/IconButton'
 import classnames from 'classnames'
 import { addNote, toggleTodo, deleteTodo, addTodo } from 'core/actions'
 import { connect } from 'react-redux'
 import TodoForm from 'components/todo_form'
 import TodoList from 'components/todo_list'
+import ActionButton from 'components/action_btn'
 
 const DEFAULT_HEIGHT = 20
 
@@ -149,31 +149,29 @@ class AddNoteForm extends React.Component {
           <TodoForm todoFormOpen={todoFormOpen} action={this.props.addTodo} />
           <TodoList todos={todos} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
           <div className={styles.footer}>
-            <IconButton
-              tooltip='Add list'
-              tooltipStyles={{marginTop: '-0.7rem'}}
-              style={{display: 'flex', width: '2rem', height: '1.5rem', padding: 0, margin: '0 0.3rem'}}
-              iconClassName='material-icons'
-              iconStyle={{color: '#777', padding: '0 0.3rem'}}
-              onClick={this.openTodoForm}
-            >
-              list
-            </IconButton>
-            <IconButton
-              style={{height: '2rem', padding: '0 0.3rem', margin: '0 0.3rem'}}
-              iconClassName='material-icons'
-              iconStyle={{color: '#777', padding: 0}}
-              tooltip='Save note'
-              tooltipStyles={{marginTop: '-0.7rem'}}
-              onClick={() => {
+            <ActionButton
+              iconColor='#777'
+              iconSize='1.5rem'
+              icon='list'
+              tooltipVisible
+              tooltipName='Add list'
+              tooltipTop='130%'
+              action={this.openTodoForm}
+            />
+            <ActionButton
+              iconColor='#777'
+              iconSize='1.5rem'
+              icon='done'
+              tooltipVisible
+              tooltipName='Save note'
+              tooltipTop='130%'
+              action={() => {
                 onAddClick(input.value || '', anchor.value || '', todos)
                 input.value = ''
                 anchor.value = ''
                 this.hideTodoForm
               }}
-            >
-              done
-            </IconButton>
+            />
           </div>
         </Paper>
       </div>

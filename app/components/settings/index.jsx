@@ -2,7 +2,7 @@ import React from 'react'
 import Drawer from 'material-ui/Drawer'
 import { connect } from 'react-redux'
 import { toggleSettings } from 'core/actions'
-import IconButton from 'material-ui/IconButton'
+import ActionButton from 'components/action_btn'
 
 const mapStateToProps = (state) => {
   return {
@@ -27,19 +27,15 @@ class Settings extends React.Component {
         onRequestChange={toggleSettings}
         containerStyle={{overflow: 'hidden', display: 'flex', flexDirection: 'column'}}
       >
-        <div>
-          <IconButton
-            onClick={toggleSettings}
-            style={{
-              padding: '0px',
-              marginRight: '-1.2rem'
-            }}
-            iconClassName='material-icons'
-          >
-            clear
-          </IconButton>
+        <div style={{display: 'flex', justifyContent: 'space-between', margin: '1rem 0.5rem'}}>
+          Some Settings
+          <ActionButton
+            icon='clear'
+            iconColor='#777'
+            iconSize='1.5rem'
+            action={toggleSettings}
+          />
         </div>
-        Some Settings
       </Drawer>
     )
   }
