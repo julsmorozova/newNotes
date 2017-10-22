@@ -15,7 +15,10 @@ const mapDispatchToProps = (dispatch) => {
 const paletteStyle = {
   display: 'flex',
   justifyContent: 'flex-start',
-  alignItems: 'center'
+  flexWrap: 'wrap',
+  maxWidth: '6rem',
+  alignItems: 'center',
+  padding: '0.3rem'
 }
 
 const colorCircleStyle = {
@@ -24,7 +27,7 @@ const colorCircleStyle = {
   border: 'none',
   width: '1.3rem',
   height: '1.3rem',
-  margin: '0 0.5rem 0.5rem 0'
+  margin: '0.25rem'
 }
 
 const colors = [
@@ -34,6 +37,8 @@ const colors = [
   {name: 'green', colorCode: '#a5d6a7'},
   {name: 'teal', colorCode: '#80cbc4'},
   {name: 'blue', colorCode: '#90caf9'},
+  {name: 'purple', colorCode: '#b39ddb'},
+  {name: 'brown', colorCode: '#bcaaa4'},
   {name: 'grey', colorCode: '#eee'}
 ]
 

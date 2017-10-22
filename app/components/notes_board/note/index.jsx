@@ -55,6 +55,8 @@ const colorMatch = [
   ['#a5d6a7', '#e8f5e9'],
   ['#80cbc4', '#e0f2f1'],
   ['#90caf9', '#e3f2fd'],
+  ['#b39ddb', '#ede7f6'],
+  ['#bcaaa4', '#efebe9'],
   ['##e3f2fd', '#fff']
 ]
 
