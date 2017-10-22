@@ -4,22 +4,13 @@ import {
   TOGGLE_NOTE_TODO,
   DELETE_NOTE_TODO,
   EDIT_NOTE_TEXT,
-  ADD_NOTE_TODO
+  ADD_NOTE_TODO,
+  CHANGE_NOTE_COLOR
 } from 'core/actions'
 
 const initialViewState = {
   notes: []
 }
-
-// const toggleThisTodo = (noteTodos, id) => {
-//   console.log(noteTodos)
-//   return noteTodos.map((noteTodo) => {
-//     if (noteTodo.id === id) {
-//       noteTodo.completed = !noteTodo.completed
-//     }
-//     return noteTodo
-//   })
-// }
 
 function findNoteIndex(notes, searchID) {
 	for(let notesLn = notes.length, n = 0; n < notesLn; n++ ) {
@@ -46,7 +37,8 @@ const notesState = (state = initialViewState, action) => {
             noteTodos: (action.todos.length !==0) ? action.todos.slice().map(function(todo) {
               todo.noteId = action.id
               return todo
-            }) : []
+            }) : [],
+            color: action.color
           }
         ]
       }
@@ -69,6 +61,13 @@ const notesState = (state = initialViewState, action) => {
         ...state,
         notes: state.notes.map(note => note.id === action.id ?
           {...note, text: action.text} : note
+        )
+      }
+    case CHANGE_NOTE_COLOR:
+      return {
+        ...state,
+        notes: state.notes.map(note => note.id === action.id ?
+          {...note, color: action.color} : note
         )
       }
     case DELETE_NOTE:

@@ -13,6 +13,7 @@ import ActionButton from 'components/action_btn'
 import Paper from 'material-ui/Paper'
 import IconButton from 'material-ui/IconButton'
 import TodoForm from 'components/todo_form'
+import ColorButton from 'components/color_btn'
 
 const iconStyle = {
   color: '#777',
@@ -46,6 +47,18 @@ const mapDispatchToProps = (dispatch) => {
     addNoteTodo: (noteId, text) => dispatch(addNoteTodo(noteId, text))
   }
 }
+
+const colorMatch = [
+  ['#e57373', '#ffebee'],
+  ['#ffab91', '#fbe9e7'],
+  ['#fff59d', '#fffde7'],
+  ['#a5d6a7', '#e8f5e9'],
+  ['#80cbc4', '#e0f2f1'],
+  ['#90caf9', '#e3f2fd'],
+  ['##e3f2fd', '#fff']
+]
+
+const colorMap = new Map(colorMatch)
 
 class Note extends React.Component {
   constructor(props) {
@@ -83,6 +96,10 @@ class Note extends React.Component {
    })
  }
 
+ matchColors(color1) {
+   return colorMap.get(color1)
+ }
+
   render() {
     const {
       notes,
@@ -98,8 +115,8 @@ class Note extends React.Component {
     return (
       <div>
         <Paper style={this.props.listView ?
-          {...noteItem, width: '30rem'} :
-            noteItem} zDepth={1}
+          {...noteItem, width: '30rem', backgroundColor: note.color} :
+            {...noteItem, backgroundColor: note.color}} zDepth={1}
         >
           <span className={styles.noteTitle}>{note.title}</span>
           <IconButton
@@ -119,8 +136,9 @@ class Note extends React.Component {
           <div className={styles.noteTextBlock}>
             <span className={styles.noteText}
               onClick={this.enableEdit}
-              style={!note.todos && !editable ? {display: 'inline-block'} :
-                note.text && !editable ? {display: 'inline-block'} : {display: 'none'}}
+              style={!note.todos && !editable ? {display: 'inline-block', backgroundColor: this.matchColors(note.color)} :
+                note.text && !editable ? {display: 'inline-block', backgroundColor: this.matchColors(note.color)} :
+                {display: 'none'}}
             >
               {this.state.value}
             </span>
@@ -153,6 +171,7 @@ class Note extends React.Component {
                   tooltipRight='-90%'
                   action={this.showNewList}
                 />
+                <ColorButton noteId={note.id} />
               </div>
               : '' }
           </div>

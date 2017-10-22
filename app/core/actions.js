@@ -10,6 +10,7 @@ export const DELETE_NOTE_TODO = 'DELETE_NOTE_TODO'
 export const DELETE_NOTE = 'DELETE_NOTE'
 export const EDIT_NOTE_TEXT = 'EDIT_NOTE_TEXT'
 export const ADD_NOTE_TODO = 'ADD_NOTE_TODO'
+export const CHANGE_NOTE_COLOR = 'CHANGE_NOTE_COLOR'
 
 let nextTodoId = 0
 let newId = 0
@@ -53,7 +54,8 @@ export const addNote = (title, text, todos) => {
     id: newId++,
     title,
     text,
-    todos
+    todos,
+    color: '#eee' //initially set to white
   }
 }
 
@@ -87,5 +89,12 @@ export const deleteNote = (id) => {
   return {
     type: DELETE_NOTE,
     id
+  }
+}
+export const changeNoteColor = (id, color) => {
+  return {
+    type: CHANGE_NOTE_COLOR,
+    id,
+    color
   }
 }
