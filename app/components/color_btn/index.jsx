@@ -85,7 +85,7 @@ class ColorButton extends React.Component {
           iconSize='1.2rem'
           tooltipVisible
           tooltipName='Change note color'
-          tooltipRight='-90%'
+          tooltipRight='-150%'
           action={this.handleTouchTap}
         />
         <Popover

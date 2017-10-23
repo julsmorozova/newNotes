@@ -121,20 +121,6 @@ class Note extends React.Component {
             {...noteItem, backgroundColor: note.color}} zDepth={1}
         >
           <span className={styles.noteTitle}>{note.title}</span>
-          <IconButton
-            iconClassName='material-icons'
-            iconStyle={iconStyle}
-            onClick={() => (deleteNote(note.id))}
-            style={{
-              display: 'flex',
-              width: '0.8rem',
-              height: '1.5rem',
-              padding: 0,
-              margin: '-0.7rem 0'
-            }}
-          >
-            clear
-          </IconButton>
           <div className={styles.noteTextBlock}>
             <span className={styles.noteText}
               onClick={this.enableEdit}
@@ -174,6 +160,15 @@ class Note extends React.Component {
                   action={this.showNewList}
                 />
                 <ColorButton noteId={note.id} />
+                <ActionButton
+                  icon='delete'
+                  iconColor='#777'
+                  iconSize='1.2rem'
+                  tooltipVisible
+                  tooltipName='Delete note'
+                  tooltipRight='-90%'
+                  action={() => (deleteNote(note.id))}
+                />
               </div>
               : '' }
           </div>
