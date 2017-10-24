@@ -10,6 +10,13 @@
   border-radius: 0.125rem;
 }
 
+.titleBlock {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .noteTitle, .noteText {
   white-space: pre-wrap;
   word-wrap: break-word;

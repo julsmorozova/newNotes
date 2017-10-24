@@ -129,7 +129,19 @@ class Note extends React.Component {
           {...noteItem, width: '30rem', backgroundColor: note.color} :
             {...noteItem, backgroundColor: note.color}} zDepth={1}
         >
-          <span className={styles.noteTitle}>{note.title}</span>
+          <div className={styles.titleBlock}>
+            <span className={styles.noteTitle}>{note.title}</span>
+            <ActionButton
+              icon='more_horiz'
+              iconColor='#777'
+              iconSize='1.5rem'
+              tooltipVisible
+              tooltipName='Show options'
+              tooltipRight='-90%'
+              tooltipTop='130%'
+              action={this.enableEdit}
+            />
+          </div>
           <div className={styles.noteTextBlock}>
             <span className={styles.noteText}
               onClick={this.enableEdit}
