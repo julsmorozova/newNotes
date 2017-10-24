@@ -8,7 +8,7 @@ class TodoList extends React.Component {
       return this.props.todos.map(todo => {
         if (todo.noteId === undefined) {
           return (
-            <Todo key={todo.text + Math.random()} todo={todo} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
+            <Todo key={todo.id} todo={todo} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
           )
         }
         return null

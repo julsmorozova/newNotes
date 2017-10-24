@@ -1,7 +1,13 @@
-import { SHOW_LIST_VIEW, SHOW_GRID_VIEW } from 'core/actions'
+import {
+  SHOW_LIST_VIEW,
+  SHOW_GRID_VIEW,
+  OPEN_CONFIRMING_DIALOG,
+  CLOSE_CONFIRMING_DIALOG 
+} from 'core/actions'
 
 const initialViewState = {
-  listView: false
+  listView: false,
+  confirmingDialogOpen: false
 }
 
 const view = (state = initialViewState, action) => {
@@ -13,6 +19,14 @@ const view = (state = initialViewState, action) => {
     case SHOW_GRID_VIEW:
       return {...state,
         listView: false
+      }
+    case OPEN_CONFIRMING_DIALOG:
+      return {...state,
+        confirmingDialogOpen: true
+      }
+    case CLOSE_CONFIRMING_DIALOG:
+      return {...state,
+        confirmingDialogOpen: false
       }
     default:
       return state

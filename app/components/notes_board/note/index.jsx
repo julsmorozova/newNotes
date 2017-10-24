@@ -5,7 +5,8 @@ import {
   deleteNoteTodo,
   toggleNoteTodo,
   editNoteText,
-  addNoteTodo
+  addNoteTodo,
+  openConfirmingDialog
 } from 'core/actions'
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
@@ -14,6 +15,7 @@ import Paper from 'material-ui/Paper'
 import IconButton from 'material-ui/IconButton'
 import TodoForm from 'components/todo_form'
 import ColorButton from 'components/color_btn'
+import ConfirmingDialog from 'components/confirming_dialog'
 
 const iconStyle = {
   color: '#777',
@@ -34,7 +36,8 @@ const noteItem = {
 
 const mapStateToProps = (state) => {
   return {
-    listView: state.view.listView
+    listView: state.view.listView,
+    confirmingDialogOpen: state.view.confirmingDialogOpen
   }
 }
 
@@ -44,7 +47,8 @@ const mapDispatchToProps = (dispatch) => {
     toggleNoteTodo: (id) => dispatch(toggleNoteTodo(id)),
     deleteNoteTodo: (id) => dispatch(deleteNoteTodo(id)),
     onCompleteClick: (id, text) => dispatch(editNoteText(id, text)),
-    addNoteTodo: (noteId, text) => dispatch(addNoteTodo(noteId, text))
+    addNoteTodo: (noteId, text) => dispatch(addNoteTodo(noteId, text)),
+    openConfirmingDialog: () => dispatch(openConfirmingDialog())
   }
 }
 
@@ -111,7 +115,9 @@ class Note extends React.Component {
       toggleNoteTodo,
       onCompleteClick,
       textChanged,
-      addTodo
+      addTodo,
+      openConfirmingDialog,
+      confirmingDialogOpen
     } = this.props
     const { editable, newListShown } = this.state
     return (
@@ -167,8 +173,9 @@ class Note extends React.Component {
                   tooltipVisible
                   tooltipName='Delete note'
                   tooltipRight='-90%'
-                  action={() => (deleteNote(note.id))}
+                  action={openConfirmingDialog}
                 />
+                <ConfirmingDialog confirmingDialogOpen={confirmingDialogOpen} action={deleteNote} noteId={note.id} />
               </div>
               : '' }
           </div>
