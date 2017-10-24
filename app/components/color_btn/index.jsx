@@ -82,10 +82,11 @@ class ColorButton extends React.Component {
         <ActionButton
           icon='brush'
           iconColor='#777'
-          iconSize='1.2rem'
+          iconSize='1.4rem'
           tooltipVisible
           tooltipName='Change note color'
           tooltipRight='-150%'
+          tooltipTop='140%'
           action={this.handleTouchTap}
         />
         <Popover

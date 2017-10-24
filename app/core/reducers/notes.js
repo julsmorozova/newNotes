@@ -5,12 +5,34 @@ import {
   DELETE_NOTE_TODO,
   EDIT_NOTE_TEXT,
   ADD_NOTE_TODO,
-  CHANGE_NOTE_COLOR
+  CHANGE_NOTE_COLOR,
+  COPY_NOTE
 } from 'core/actions'
 
 const initialViewState = {
   notes: []
 }
+
+const findNote = (notes, copiedNoteId) => {
+  for(let notesLn = notes.length, n = 0; n < notesLn; n++) {
+    if (notes[n].id === copiedNoteId) {
+      return notes[n]
+    }
+  }
+  return null
+}
+
+const makeCopy = (note, newId) => {
+  let noteCopy = {
+    id: newId,
+    title: 'Note ' + (newId + 1),
+    text: note.text,
+    noteTodos: note.noteTodos,
+    color: note.color
+  }
+  return noteCopy
+}
+
 
 function findNoteIndex(notes, searchID) {
 	for(let notesLn = notes.length, n = 0; n < notesLn; n++ ) {
@@ -74,6 +96,13 @@ const notesState = (state = initialViewState, action) => {
       return {
         ...state,
         notes: state.notes.filter(note => note.id !== action.id)
+      }
+    case COPY_NOTE:
+      return {
+        ...state,
+        notes: [...state.notes,
+          makeCopy(findNote(state.notes, action.copiedNoteId), action.id)
+        ]
       }
     case TOGGLE_NOTE_TODO:
       return {

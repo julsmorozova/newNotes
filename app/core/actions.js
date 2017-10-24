@@ -13,6 +13,7 @@ export const ADD_NOTE_TODO = 'ADD_NOTE_TODO'
 export const CHANGE_NOTE_COLOR = 'CHANGE_NOTE_COLOR'
 export const OPEN_CONFIRMING_DIALOG = 'OPEN_CONFIRMING_DIALOG'
 export const CLOSE_CONFIRMING_DIALOG = 'CLOSE_CONFIRMING_DIALOG'
+export const COPY_NOTE = 'COPY_NOTE'
 
 let nextTodoId = 0
 let newId = 0
@@ -104,3 +105,11 @@ export const changeNoteColor = (id, color) => {
 
 export const openConfirmingDialog = (payload) => ({ type: OPEN_CONFIRMING_DIALOG, ...payload })
 export const closeConfirmingDialog = (payload) => ({ type: CLOSE_CONFIRMING_DIALOG, ...payload })
+
+export const copyNote = (copiedNoteId) => {
+  return {
+    type: COPY_NOTE,
+    id: newId++,
+    copiedNoteId
+  }
+}

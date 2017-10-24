@@ -6,7 +6,8 @@ import {
   toggleNoteTodo,
   editNoteText,
   addNoteTodo,
-  openConfirmingDialog
+  openConfirmingDialog,
+  copyNote
 } from 'core/actions'
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
@@ -48,7 +49,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteNoteTodo: (id) => dispatch(deleteNoteTodo(id)),
     onCompleteClick: (id, text) => dispatch(editNoteText(id, text)),
     addNoteTodo: (noteId, text) => dispatch(addNoteTodo(noteId, text)),
-    openConfirmingDialog: () => dispatch(openConfirmingDialog())
+    openConfirmingDialog: () => dispatch(openConfirmingDialog()),
+    copyNote: (copiedNoteId) => dispatch(copyNote(copiedNoteId))
   }
 }
 
@@ -117,7 +119,8 @@ class Note extends React.Component {
       textChanged,
       addTodo,
       openConfirmingDialog,
-      confirmingDialogOpen
+      confirmingDialogOpen,
+      copyNote
     } = this.props
     const { editable, newListShown } = this.state
     return (
@@ -148,9 +151,10 @@ class Note extends React.Component {
                 <ActionButton
                   icon='done'
                   iconColor='#777'
-                  iconSize='1.2rem'
+                  iconSize='1.5rem'
                   tooltipVisible
                   tooltipName='Done'
+                  tooltipTop='130%'
                   action={() => {
                     onCompleteClick(note.id, this.state.value),
                     this.completeEdit
@@ -159,20 +163,32 @@ class Note extends React.Component {
                 <ActionButton
                   icon='add'
                   iconColor='#777'
-                  iconSize='1.2rem'
+                  iconSize='1.5rem'
                   tooltipVisible
                   tooltipName='Add todo list'
                   tooltipRight='-90%'
+                  tooltipTop='130%'
                   action={this.showNewList}
                 />
                 <ColorButton noteId={note.id} />
                 <ActionButton
+                  icon='content_copy'
+                  iconColor='#777'
+                  iconSize='1.4rem'
+                  tooltipVisible
+                  tooltipName='Copy this note'
+                  tooltipRight='-90%'
+                  tooltipTop='140%'
+                  action={() => {copyNote(note.id)}}
+                />
+                <ActionButton
                   icon='delete'
                   iconColor='#777'
-                  iconSize='1.2rem'
+                  iconSize='1.4rem'
                   tooltipVisible
                   tooltipName='Delete note'
                   tooltipRight='-90%'
+                  tooltipTop='140%'
                   action={openConfirmingDialog}
                 />
                 <ConfirmingDialog confirmingDialogOpen={confirmingDialogOpen} action={deleteNote} noteId={note.id} />
