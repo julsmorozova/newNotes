@@ -6,7 +6,8 @@ import {
   EDIT_NOTE_TEXT,
   ADD_NOTE_TODO,
   CHANGE_NOTE_COLOR,
-  COPY_NOTE
+  COPY_NOTE,
+  ADD_DEFAULT_TODOS
 } from 'core/actions'
 
 const initialViewState = {
@@ -22,28 +23,51 @@ const findNote = (notes, copiedNoteId) => {
   return null
 }
 
+function makeTodoCopy(todo, newId) {
+  let todoCopy = {
+    id: todo.id,
+    text: todo.text,
+    completed: todo.completed,
+    noteId: newId
+  }
+  return todoCopy
+}
+
 const makeCopy = (note, newId) => {
   let noteCopy = {
     id: newId,
     title: 'Note ' + (newId + 1),
     text: note.text,
-    noteTodos: note.noteTodos,
+    noteTodos: note.noteTodos.map(function(noteTodo) {
+      return makeTodoCopy(noteTodo, newId)
+    }),
     color: note.color
   }
   return noteCopy
 }
 
-
-function findNoteIndex(notes, searchID) {
-	for(let notesLn = notes.length, n = 0; n < notesLn; n++ ) {
-		for(let todoLn = notes[n].noteTodos.length, t = 0; t < todoLn; t++ ) {
-			if (notes[n].noteTodos[t].id === searchID) {
-				return n
-			}
-		}
-	}
-	return null
+const makeThisNoteList = (noteId, todos, firstTodoId) => {
+  return todos.map((todo, index) => {
+    return {
+      noteId: noteId,
+      id: firstTodoId + index,
+      text: todo,
+      completed: false //initially set to false
+    }
+  })
 }
+
+
+// function findNoteIndex(notes, searchID) {
+// 	for(let notesLn = notes.length, n = 0; n < notesLn; n++ ) {
+// 		for(let todoLn = notes[n].noteTodos.length, t = 0; t < todoLn; t++ ) {
+// 			if (notes[n].noteTodos[t].id === searchID) {
+// 				return n
+// 			}
+// 		}
+// 	}
+// 	return null
+// }
 
 const notesState = (state = initialViewState, action) => {
   switch(action.type) {
@@ -56,8 +80,9 @@ const notesState = (state = initialViewState, action) => {
             id: action.id,
             title: action.title ? action.title : 'Note ' + (action.id + 1),
             text: action.text,
-            noteTodos: (action.todos.length !==0) ? action.todos.slice().map(function(todo) {
+            noteTodos: (action.todos.length !==0) ? action.todos.slice().map(function(todo, index) {
               todo.noteId = action.id
+              todo.id = index
               return todo
             }) : [],
             color: action.color
@@ -70,12 +95,20 @@ const notesState = (state = initialViewState, action) => {
         notes: state.notes.map(note => note.id === action.noteId ?
           {...note, noteTodos: [...note.noteTodos,
             {
-              id: action.id,
+              id: note.noteTodos.length,
               noteId: action.noteId,
               text: action.text,
               completed: false
             }
           ]} : note
+        )
+      }
+    case ADD_DEFAULT_TODOS:
+      return {
+        ...state,
+        notes: state.notes.map(note => note.id === action.noteId ?
+          {...note, noteTodos: note.noteTodos.concat(makeThisNoteList(action.noteId, action.todos, action.firstTodoId))} :
+            note
         )
       }
     case EDIT_NOTE_TEXT:
@@ -108,14 +141,12 @@ const notesState = (state = initialViewState, action) => {
       return {
         ...state,
         notes: state.notes.map(function(note) {
-            for(let todoLn = note.noteTodos.length, t = 0; t < todoLn; t++ ) {
-        			if (note.noteTodos[t].id === action.id) {
-                return {...note, noteTodos: note.noteTodos.map(todo => todo.id === action.id ?
-                  {...todo, completed: !todo.completed} : todo
-                )}
-              }
-            }
-            return note
+          if (note.id === action.noteId) {
+            return {...note, noteTodos: note.noteTodos.map(todo => todo.id === action.id ?
+              {...todo, completed: !todo.completed} : todo
+            )}
+          }
+          return note
         })
       }
     case DELETE_NOTE_TODO:
@@ -123,12 +154,10 @@ const notesState = (state = initialViewState, action) => {
       return {
         ...state,
         notes: state.notes.map(function(note) {
-            for(let todoLn = note.noteTodos.length, t = 0; t < todoLn; t++ ) {
-        			if (note.noteTodos[t].id === action.id) {
-                return {...note, noteTodos: note.noteTodos.filter(todo => todo.id !== action.id)}
-              }
-            }
-            return note
+          if (note.id === action.noteId) {
+              return {...note, noteTodos: note.noteTodos.filter(todo => todo.id !== action.id)}
+          }
+          return note
         })
       }
     default:

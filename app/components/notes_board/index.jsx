@@ -32,6 +32,7 @@ class NotesBoard extends React.Component {
   }
 
   render() {
+    console.log(this.props.notes)
     return (
       <div
         style={this.props.listView ?

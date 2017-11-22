@@ -7,7 +7,8 @@ import {
   editNoteText,
   addNoteTodo,
   openConfirmingDialog,
-  copyNote
+  copyNote,
+  addDefaultTodos
 } from 'core/actions'
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
@@ -17,6 +18,7 @@ import IconButton from 'material-ui/IconButton'
 import TodoForm from 'components/todo_form'
 import ColorButton from 'components/color_btn'
 import ConfirmingDialog from 'components/confirming_dialog'
+import AddListButton from 'components/add_list_button'
 
 const iconStyle = {
   color: '#777',
@@ -50,7 +52,8 @@ const mapDispatchToProps = (dispatch) => {
     onCompleteClick: (id, text) => dispatch(editNoteText(id, text)),
     addNoteTodo: (noteId, text) => dispatch(addNoteTodo(noteId, text)),
     openConfirmingDialog: () => dispatch(openConfirmingDialog()),
-    copyNote: (copiedNoteId) => dispatch(copyNote(copiedNoteId))
+    copyNote: (copiedNoteId) => dispatch(copyNote(copiedNoteId)),
+    addDefaultTodos: (noteId, todos) => dispatch(addDefaultTodos(noteId, todos))
   }
 }
 
@@ -67,6 +70,18 @@ const colorMatch = [
 ]
 
 const colorMap = new Map(colorMatch)
+
+const defaultList = [
+  'apples',
+  'bananas',
+  'cherry tomatoes',
+  'avocado 2pcs',
+  'salmon 1kg',
+  'feta cheese 200g 2pcs',
+  'plain yogurt',
+  'bread for toasting',
+  'granola'
+]
 
 class Note extends React.Component {
   constructor(props) {
@@ -120,7 +135,8 @@ class Note extends React.Component {
       addTodo,
       openConfirmingDialog,
       confirmingDialogOpen,
-      copyNote
+      copyNote,
+      addDefaultTodos
     } = this.props
     const { editable, newListShown } = this.state
     return (
@@ -172,16 +188,7 @@ class Note extends React.Component {
                     this.completeEdit
                   }}
                 />
-                <ActionButton
-                  icon='add'
-                  iconColor='#777'
-                  iconSize='1.5rem'
-                  tooltipVisible
-                  tooltipName='Add todo list'
-                  tooltipRight='-90%'
-                  tooltipTop='130%'
-                  action={this.showNewList}
-                />
+                <AddListButton action1={() => {addDefaultTodos(note.id, defaultList)}} action2={this.showNewList} />
                 <ColorButton noteId={note.id} />
                 <ActionButton
                   icon='content_copy'

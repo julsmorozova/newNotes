@@ -14,6 +14,7 @@ export const CHANGE_NOTE_COLOR = 'CHANGE_NOTE_COLOR'
 export const OPEN_CONFIRMING_DIALOG = 'OPEN_CONFIRMING_DIALOG'
 export const CLOSE_CONFIRMING_DIALOG = 'CLOSE_CONFIRMING_DIALOG'
 export const COPY_NOTE = 'COPY_NOTE'
+export const ADD_DEFAULT_TODOS = 'ADD_DEFAULT_TODOS'
 
 let nextTodoId = 0
 let newId = 0
@@ -70,17 +71,19 @@ export const editNoteText = (id, text) => {
   }
 }
 
-export const toggleNoteTodo = (id, ...payload) => {
+export const toggleNoteTodo = (noteId, id, ...payload) => {
   return {
     type: TOGGLE_NOTE_TODO,
+    noteId,
     id,
     ...payload
   }
 }
 
-export const deleteNoteTodo = (id) => {
+export const deleteNoteTodo = (noteId, id) => {
   return {
     type: DELETE_NOTE_TODO,
+    noteId,
     id
   }
 }
@@ -111,5 +114,14 @@ export const copyNote = (copiedNoteId) => {
     type: COPY_NOTE,
     id: newId++,
     copiedNoteId
+  }
+}
+
+export const addDefaultTodos = (noteId, todos) => {
+  return {
+    type: ADD_DEFAULT_TODOS,
+    noteId,
+    todos,
+    firstTodoId: nextTodoId++
   }
 }

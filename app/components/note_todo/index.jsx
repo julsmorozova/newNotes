@@ -6,8 +6,8 @@ import styles from './note_todo.scss'
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleNoteTodo: (id) => dispatch(toggleNoteTodo(id)),
-    deleteNoteTodo: (id) => dispatch(deleteNoteTodo(id))
+    toggleNoteTodo: (noteId, id) => dispatch(toggleNoteTodo(noteId, id)),
+    deleteNoteTodo: (noteId, id) => dispatch(deleteNoteTodo(noteId, id))
   }
 }
 
@@ -22,7 +22,7 @@ class NoteTodo extends React.Component {
     return (
       <div className={styles.todoItem}>
         <a
-          onClick={() => (toggleNoteTodo(noteTodo.id))}
+          onClick={() => (toggleNoteTodo(noteTodo.noteId, noteTodo.id))}
           style={{
             textDecoration: noteTodo.completed ? 'line-through' : 'none',
             wordWrap: 'break-word',
@@ -35,7 +35,7 @@ class NoteTodo extends React.Component {
           icon='clear'
           iconColor='#777'
           iconSize='1rem'
-          action={() => (deleteNoteTodo(noteTodo.id))}
+          action={() => (deleteNoteTodo(noteTodo.noteId, noteTodo.id))}
         />
       </div>
     )
