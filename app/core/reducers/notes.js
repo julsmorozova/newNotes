@@ -49,10 +49,10 @@ const makeCopy = (note, newId) => {
 const makeThisNoteList = (noteId, todos, firstTodoId) => {
   return todos.map((todo, index) => {
     return {
-      noteId: noteId,
       id: firstTodoId + index,
       text: todo,
-      completed: false //initially set to false
+      completed: false, //initially set to false
+      noteId: noteId
     }
   })
 }

@@ -155,7 +155,7 @@ class Note extends React.Component {
               tooltipName='Show options'
               tooltipRight='-90%'
               tooltipTop='130%'
-              action={this.enableEdit}
+              action={this.state.editable ? this.completeEdit : this.enableEdit}
             />
           </div>
           <div className={styles.noteTextBlock}>

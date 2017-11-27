@@ -5,7 +5,9 @@ import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 
 const menuItem = {
-
+  fontSize: '0.85rem',
+  minHeight: '2rem',
+  lineHeight: '2rem'
 }
 
 class AddListButton extends React.Component {
