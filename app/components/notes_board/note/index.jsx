@@ -30,7 +30,7 @@ const noteItem = {
   display: 'flex',
   width: '100%',
   flexWrap: 'wrap',
-  padding: '1rem 0.8rem',
+  padding: '1rem 0.8rem 0.4rem',
   width: '18.75rem',
   margin: '0 1rem 1rem 0',
   boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px',
@@ -174,46 +174,8 @@ class Note extends React.Component {
               onChange={this.handleChange}
               defaultValue={this.state.value}
             />
-            { editable ?
-              <div className={styles.buttonsBlock}>
-                <ActionButton
-                  icon='done'
-                  iconColor='#777'
-                  iconSize='1.5rem'
-                  tooltipVisible
-                  tooltipName='Done'
-                  tooltipTop='130%'
-                  action={() => {
-                    onCompleteClick(note.id, this.state.value),
-                    this.completeEdit
-                  }}
-                />
-                <AddListButton action1={() => {addDefaultTodos(note.id, defaultList)}} action2={this.showNewList} />
-                <ColorButton noteId={note.id} />
-                <ActionButton
-                  icon='content_copy'
-                  iconColor='#777'
-                  iconSize='1.4rem'
-                  tooltipVisible
-                  tooltipName='Copy this note'
-                  tooltipRight='-90%'
-                  tooltipTop='140%'
-                  action={() => {copyNote(note.id)}}
-                />
-                <ActionButton
-                  icon='delete'
-                  iconColor='#777'
-                  iconSize='1.4rem'
-                  tooltipVisible
-                  tooltipName='Delete note'
-                  tooltipRight='-90%'
-                  tooltipTop='140%'
-                  action={openConfirmingDialog}
-                />
-                <ConfirmingDialog confirmingDialogOpen={confirmingDialogOpen} action={deleteNote} noteId={note.id} />
-              </div>
-              : '' }
           </div>
+          <TodoForm todoFormOpen={newListShown} action2={this.props.addNoteTodo} noteId={note.id} />
           <div className={styles.todoList}>
             <NoteList noteTodos={note.noteTodos}
               toggleNoteTodo={toggleNoteTodo}
@@ -221,7 +183,45 @@ class Note extends React.Component {
               noteId={note.id}
             />
           </div>
-          <TodoForm todoFormOpen={newListShown} action2={this.props.addNoteTodo} noteId={note.id} />
+          { editable ?
+            <div className={styles.buttonsBlock} style={{backgroundColor: this.matchColors(note.color)}}>
+              <ActionButton
+                icon='done'
+                iconColor='#777'
+                iconSize='1.5rem'
+                tooltipVisible
+                tooltipName='Done'
+                tooltipTop='130%'
+                action={() => {
+                  onCompleteClick(note.id, this.state.value),
+                  this.completeEdit
+                }}
+              />
+              <AddListButton action1={() => {addDefaultTodos(note.id, defaultList)}} action2={this.showNewList} />
+              <ColorButton noteId={note.id} />
+              <ActionButton
+                icon='content_copy'
+                iconColor='#777'
+                iconSize='1.4rem'
+                tooltipVisible
+                tooltipName='Copy this note'
+                tooltipRight='-90%'
+                tooltipTop='140%'
+                action={() => {copyNote(note.id)}}
+              />
+              <ActionButton
+                icon='delete'
+                iconColor='#777'
+                iconSize='1.4rem'
+                tooltipVisible
+                tooltipName='Delete note'
+                tooltipRight='-90%'
+                tooltipTop='140%'
+                action={openConfirmingDialog}
+              />
+              <ConfirmingDialog confirmingDialogOpen={confirmingDialogOpen} action={deleteNote} noteId={note.id} />
+            </div>
+            : '' }
         </Paper>
       </div>
     )
