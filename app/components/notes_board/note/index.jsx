@@ -139,6 +139,18 @@ class Note extends React.Component {
    return (name.length > max) ? name.substr(0, max).concat('...') : name
  }
 
+ getCurrentTime() {
+  let date = new Date(),
+      hour = this.addLeadingZero(date.getHours()),
+      min = this.addLeadingZero(date.getMinutes()),
+      sec = this.addLeadingZero(date.getSeconds());
+  return hour + ':' + min + ':' + sec;
+}
+
+addLeadingZero(value) {
+  return value < 10 ? '0' + value : value;
+}
+
   render() {
     const {
       notes,
@@ -189,6 +201,9 @@ class Note extends React.Component {
               tooltipTop='130%'
               action={this.state.editable ? this.completeEdit : this.enableEdit}
             />
+          </div>
+          <div className={styles.updateBlock} style={editable ? {display: 'none'}: {display: 'block'}}>
+            Last update: {this.getCurrentTime()}
           </div>
           <div className={styles.noteTextBlock}>
             <span className={styles.noteText}
