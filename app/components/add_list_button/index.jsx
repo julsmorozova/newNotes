@@ -40,7 +40,7 @@ class AddListButton extends React.Component {
         <ActionButton
           icon='list'
           tooltipVisible
-          tooltipName='Add todo list'
+          tooltipName='List actions'
           tooltipRight='-90%'
           tooltipTop='130%'
           action={this.handleTouchTap}
@@ -59,7 +59,7 @@ class AddListButton extends React.Component {
             <MenuItem
               style={menuItem}
               onClick={action2}
-              primaryText='Add new list'
+              primaryText='Delete current list'
             />
           </Menu>
         </Popover>

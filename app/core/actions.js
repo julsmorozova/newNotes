@@ -15,6 +15,7 @@ export const OPEN_CONFIRMING_DIALOG = 'OPEN_CONFIRMING_DIALOG'
 export const CLOSE_CONFIRMING_DIALOG = 'CLOSE_CONFIRMING_DIALOG'
 export const COPY_NOTE = 'COPY_NOTE'
 export const ADD_DEFAULT_TODOS = 'ADD_DEFAULT_TODOS'
+export const DELETE_TODO_LIST = 'DELETE_TODO_LIST'
 
 let nextTodoId = 0
 let newId = 0
@@ -85,6 +86,13 @@ export const deleteNoteTodo = (noteId, id) => {
     type: DELETE_NOTE_TODO,
     noteId,
     id
+  }
+}
+
+export const deleteTodoList = (noteId) => {
+  return {
+    type: DELETE_TODO_LIST,
+    noteId
   }
 }
 

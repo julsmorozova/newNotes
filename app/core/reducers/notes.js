@@ -7,7 +7,8 @@ import {
   ADD_NOTE_TODO,
   CHANGE_NOTE_COLOR,
   COPY_NOTE,
-  ADD_DEFAULT_TODOS
+  ADD_DEFAULT_TODOS,
+  DELETE_TODO_LIST
 } from 'core/actions'
 
 const initialViewState = {
@@ -107,7 +108,10 @@ const notesState = (state = initialViewState, action) => {
       return {
         ...state,
         notes: state.notes.map(note => note.id === action.noteId ?
-          {...note, noteTodos: note.noteTodos.concat(makeThisNoteList(action.noteId, action.todos, action.firstTodoId))} :
+          {...note, noteTodos: (note.noteTodos.length === 0) ?
+            note.noteTodos.concat(makeThisNoteList(action.noteId, action.todos, action.firstTodoId)) :
+              makeThisNoteList(action.noteId, action.todos, action.firstTodoId)
+          } :
             note
         )
       }
@@ -156,6 +160,16 @@ const notesState = (state = initialViewState, action) => {
         notes: state.notes.map(function(note) {
           if (note.id === action.noteId) {
               return {...note, noteTodos: note.noteTodos.filter(todo => todo.id !== action.id)}
+          }
+          return note
+        })
+      }
+    case DELETE_TODO_LIST:
+      return {
+        ...state,
+        notes: state.notes.map(function(note) {
+          if (note.id === action.noteId) {
+            return {...note, noteTodos: note.noteTodos.length = 0}
           }
           return note
         })

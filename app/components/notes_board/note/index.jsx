@@ -8,7 +8,8 @@ import {
   addNoteTodo,
   openConfirmingDialog,
   copyNote,
-  addDefaultTodos
+  addDefaultTodos,
+  deleteTodoList
 } from 'core/actions'
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
@@ -53,7 +54,8 @@ const mapDispatchToProps = (dispatch) => {
     addNoteTodo: (noteId, text) => dispatch(addNoteTodo(noteId, text)),
     openConfirmingDialog: () => dispatch(openConfirmingDialog()),
     copyNote: (copiedNoteId) => dispatch(copyNote(copiedNoteId)),
-    addDefaultTodos: (noteId, todos) => dispatch(addDefaultTodos(noteId, todos))
+    addDefaultTodos: (noteId, todos) => dispatch(addDefaultTodos(noteId, todos)),
+    deleteTodoList: (noteId) => dispatch(deleteTodoList(noteId))
   }
 }
 
@@ -136,7 +138,8 @@ class Note extends React.Component {
       openConfirmingDialog,
       confirmingDialogOpen,
       copyNote,
-      addDefaultTodos
+      addDefaultTodos,
+      deleteTodoList
     } = this.props
     const { editable, newListShown } = this.state
     return (
@@ -175,7 +178,7 @@ class Note extends React.Component {
               defaultValue={this.state.value}
             />
           </div>
-          <TodoForm todoFormOpen={newListShown} action2={this.props.addNoteTodo} noteId={note.id} />
+          <TodoForm todoFormOpen={newListShown || editable} action2={this.props.addNoteTodo} noteId={note.id} />
           <div className={styles.todoList}>
             <NoteList noteTodos={note.noteTodos}
               toggleNoteTodo={toggleNoteTodo}
@@ -197,7 +200,9 @@ class Note extends React.Component {
                   this.completeEdit
                 }}
               />
-              <AddListButton action1={() => {addDefaultTodos(note.id, defaultList)}} action2={this.showNewList} />
+              <AddListButton action1={() => {addDefaultTodos(note.id, defaultList)}}
+                action2={() => {deleteTodoList(note.id)}}
+              />
               <ColorButton noteId={note.id} />
               <ActionButton
                 icon='content_copy'
