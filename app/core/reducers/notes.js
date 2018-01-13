@@ -37,7 +37,7 @@ function makeTodoCopy(todo, newId) {
 const makeCopy = (note, newId) => {
   let noteCopy = {
     id: newId,
-    title: note.title || 'Note ' + (newId + 1),
+    title: note.title + ' copy' || 'Note ' + (newId + 1) + ' copy',
     text: note.text,
     noteTodos: note.noteTodos.map(function(noteTodo) {
       return makeTodoCopy(noteTodo, newId)
