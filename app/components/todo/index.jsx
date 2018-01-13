@@ -17,8 +17,8 @@ class Todo extends React.Component {
           {todo.text}
         </a>
         <ActionButton
+          customMargin='0 0.5rem 0 0'
           icon='clear'
-          iconColor='#777'
           iconSize='1rem'
           action={() => (deleteTodo(todo.id))}
         />

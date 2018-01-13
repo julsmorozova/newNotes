@@ -39,8 +39,6 @@ class AddListButton extends React.Component {
       <div>
         <ActionButton
           icon='list'
-          iconColor='#777'
-          iconSize='1.5rem'
           tooltipVisible
           tooltipName='Add todo list'
           tooltipRight='-90%'

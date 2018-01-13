@@ -81,7 +81,6 @@ class ColorButton extends React.Component {
       <div>
         <ActionButton
           icon='brush'
-          iconColor='#777'
           iconSize='1.4rem'
           tooltipVisible
           tooltipName='Change note color'

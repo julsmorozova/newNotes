@@ -150,8 +150,7 @@ class AddNoteForm extends React.Component {
           <TodoList todos={todos} toggleTodo={this.props.toggleTodo} deleteTodo={this.props.deleteTodo} />
           <div className={styles.footer}>
             <ActionButton
-              iconColor='#777'
-              iconSize='1.5rem'
+              iconColor='#00BCD4'
               icon='list'
               tooltipVisible
               tooltipName='Add list'
@@ -159,8 +158,7 @@ class AddNoteForm extends React.Component {
               action={this.openTodoForm}
             />
             <ActionButton
-              iconColor='#777'
-              iconSize='1.5rem'
+              iconColor='#00BCD4'
               icon='done'
               tooltipVisible
               tooltipName='Save note'

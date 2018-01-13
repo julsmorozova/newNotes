@@ -9,15 +9,14 @@ const iconStyle= {
 const btnStyle = {
   width: '1.3rem',
   padding: '0rem',
-  height: '1.3rem',
-  margin: '0 1rem 0 0'
+  height: '1.3rem'
 }
 
 class ActionButton extends React.Component {
 
   static defaultProps = {
-    iconColor: '#fff',
-    iconSize: '1.7rem',
+    iconColor: '#777',
+    iconSize: '1.5rem',
     tooltipVisible: false,
     tooltipTop: '90%',
     tooltipRight: '0.5%'
@@ -49,11 +48,11 @@ class ActionButton extends React.Component {
   }
 
   render() {
-    const { icon, action, iconColor, iconSize, tooltipVisible, tooltipName, tooltipTop, tooltipRight } = this.props
+    const { icon, action, iconColor, iconSize, tooltipVisible, tooltipName, tooltipTop, tooltipRight, customMargin } = this.props
     return (
       <div ref='actionButton' style={{position: 'relative', display: 'flex', alignItems: 'center'}}>
         <IconButton
-          style={btnStyle}
+          style={{...btnStyle, margin: customMargin || '0 1rem 0 0'}}
           iconClassName='material-icons'
           iconStyle={{...iconStyle, color: iconColor, fontSize: iconSize}}
           onClick={action}

@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import ActionButton from 'components/action_btn'
 import styles from './todo_form.scss'
 
-let task = ''
-
 class TodoForm extends React.Component {
   constructor(props) {
     super(props)
@@ -54,12 +52,18 @@ class TodoForm extends React.Component {
         />
         <ActionButton
           icon='done'
-          iconColor='#777'
-          iconSize='1.5rem'
+          iconSize='1.2rem'
           tooltipName='Add item'
+          customMargin='0 0.5rem 0 0'
           tooltipVisible
           action={() => {
-            action2 ? action2(noteId, this.state.value) : action(this.state.value)
+            if (action2) {
+              action2(noteId, value)
+            }
+            else {
+              action(value)
+            }
+            this.clearInput()
           }}
         />
       </div>
