@@ -28,7 +28,7 @@ class TodoForm extends React.Component {
   }
 
   handleBlur = (event) => {
-    event.target.parentElement.style.borderBottom = '0.0625rem solid #e0e0e0'
+    event.target.parentElement.style.borderBottom = 'none'
   }
 
   render() {

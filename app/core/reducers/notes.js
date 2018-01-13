@@ -8,7 +8,8 @@ import {
   CHANGE_NOTE_COLOR,
   COPY_NOTE,
   ADD_DEFAULT_TODOS,
-  DELETE_TODO_LIST
+  DELETE_TODO_LIST,
+  EDIT_NOTE_TITLE
 } from 'core/actions'
 
 const initialViewState = {
@@ -120,6 +121,13 @@ const notesState = (state = initialViewState, action) => {
         ...state,
         notes: state.notes.map(note => note.id === action.id ?
           {...note, text: action.text} : note
+        )
+      }
+    case EDIT_NOTE_TITLE:
+      return {
+        ...state,
+        notes: state.notes.map(note => note.id === action.id ?
+          {...note, title: action.title} : note
         )
       }
     case CHANGE_NOTE_COLOR:

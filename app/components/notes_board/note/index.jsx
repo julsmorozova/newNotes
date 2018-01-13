@@ -9,7 +9,8 @@ import {
   openConfirmingDialog,
   copyNote,
   addDefaultTodos,
-  deleteTodoList
+  deleteTodoList,
+  editNoteTitle
 } from 'core/actions'
 import { connect } from 'react-redux'
 import NoteList from 'components/note_list'
@@ -55,7 +56,8 @@ const mapDispatchToProps = (dispatch) => {
     openConfirmingDialog: () => dispatch(openConfirmingDialog()),
     copyNote: (copiedNoteId) => dispatch(copyNote(copiedNoteId)),
     addDefaultTodos: (noteId, todos) => dispatch(addDefaultTodos(noteId, todos)),
-    deleteTodoList: (noteId) => dispatch(deleteTodoList(noteId))
+    deleteTodoList: (noteId) => dispatch(deleteTodoList(noteId)),
+    editNoteTitle: (id, title) => dispatch(editNoteTitle(id, title))
   }
 }
 
@@ -89,7 +91,8 @@ class Note extends React.Component {
   constructor(props) {
    super(props)
    this.state = {
-     value: props.note.text,
+     textValue: props.note.text,
+     titleValue: props.note.title,
      editable: false,
      newListShown: false
    }
@@ -97,9 +100,15 @@ class Note extends React.Component {
    this.completeEdit = this.completeEdit.bind(this)
  }
 
- handleChange = (event) => {
+ handleTextChange = (event) => {
    this.setState({
-     value: event.target.value,
+     textValue: event.target.value
+   })
+ }
+
+ handleTitleChange = (event) => {
+   this.setState({
+     titleValue: event.target.value
    })
  }
 
@@ -125,6 +134,11 @@ class Note extends React.Component {
    return colorMap.get(color1)
  }
 
+ trimLongName(name) {
+   let max = 23;
+   return (name.length > max) ? name.substr(0, max).concat('...') : name
+ }
+
   render() {
     const {
       notes,
@@ -139,7 +153,8 @@ class Note extends React.Component {
       confirmingDialogOpen,
       copyNote,
       addDefaultTodos,
-      deleteTodoList
+      deleteTodoList,
+      editNoteTitle
     } = this.props
     const { editable, newListShown } = this.state
     return (
@@ -148,12 +163,26 @@ class Note extends React.Component {
           {...noteItem, width: '30rem', backgroundColor: note.color} :
             {...noteItem, backgroundColor: note.color}} zDepth={1}
         >
-          <div className={styles.titleBlock}>
-            <span className={styles.noteTitle}>{note.title}</span>
+          <div className={styles.titleBlock}
+            style={editable ? {backgroundColor: '#fff', padding: '0 0.2rem'} :
+            {backgroundColor: 'inherit', padding: '0'}}
+          >
+            <span className={styles.noteTitle}
+              onClick={this.enableEdit}
+              style={editable ? {display: 'none'} : {display: 'block'}}
+            >
+              {this.trimLongName(this.state.titleValue)}
+            </span>
+            <input
+              name='noteTitleInput'
+              className={styles.noteTitle}
+              style={editable ? {display: 'block'} : {display: 'none'}}
+              onChange={this.handleTitleChange}
+              defaultValue={this.state.titleValue}
+            />
             <ActionButton
               icon='more_horiz'
-              iconColor='#777'
-              iconSize='1.5rem'
+              customMargin='0 0.2rem 0 0'
               tooltipVisible
               tooltipName='Show options'
               tooltipRight='-90%'
@@ -168,14 +197,14 @@ class Note extends React.Component {
                 note.text && !editable ? {display: 'inline-block', backgroundColor: this.matchColors(note.color)} :
                 {display: 'none'}}
             >
-              {this.state.value}
+              {this.state.textValue}
             </span>
             <textarea
               className={styles.noteText}
               name='noteTextarea'
               style={editable ? {display: 'flex'} : {display: 'none'}}
-              onChange={this.handleChange}
-              defaultValue={this.state.value}
+              onChange={this.handleTextChange}
+              defaultValue={this.state.textValue}
             />
           </div>
           <TodoForm todoFormOpen={newListShown || editable} action2={this.props.addNoteTodo} noteId={note.id} />
@@ -190,13 +219,12 @@ class Note extends React.Component {
             <div className={styles.buttonsBlock} style={{backgroundColor: this.matchColors(note.color)}}>
               <ActionButton
                 icon='done'
-                iconColor='#777'
-                iconSize='1.5rem'
                 tooltipVisible
                 tooltipName='Done'
                 tooltipTop='130%'
                 action={() => {
-                  onCompleteClick(note.id, this.state.value),
+                  onCompleteClick(note.id, this.state.textValue),
+                  editNoteTitle(note.id, this.state.titleValue),
                   this.completeEdit
                 }}
               />
@@ -206,7 +234,6 @@ class Note extends React.Component {
               <ColorButton noteId={note.id} />
               <ActionButton
                 icon='content_copy'
-                iconColor='#777'
                 iconSize='1.4rem'
                 tooltipVisible
                 tooltipName='Copy this note'
@@ -216,7 +243,6 @@ class Note extends React.Component {
               />
               <ActionButton
                 icon='delete'
-                iconColor='#777'
                 iconSize='1.4rem'
                 tooltipVisible
                 tooltipName='Delete note'
