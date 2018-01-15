@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
   return {
-    listView: state.view.listView
+    listView: state.view.listView,
+    deleted: state.notesState.deleted
   }
 }
 
@@ -32,6 +33,7 @@ class NotesBoard extends React.Component {
   }
 
   render() {
+    console.log('deleted', this.props.deleted)
     console.log(this.props.notes)
     return (
       <div

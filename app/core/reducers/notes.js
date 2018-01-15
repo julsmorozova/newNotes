@@ -13,7 +13,8 @@ import {
 } from 'core/actions'
 
 const initialViewState = {
-  notes: []
+  notes: [],
+  deleted: []
 }
 
 const findNote = (notes, copiedNoteId) => {
@@ -57,6 +58,19 @@ const makeThisNoteList = (noteId, todos, firstTodoId) => {
       noteId: noteId
     }
   })
+}
+
+const splitFromDeleted = (notes, actionId) => {
+  const result = {notesLeft: [], notesDeleted: []}
+  notes.forEach(function(note) {
+    if (note.id !== actionId) {
+      result.notesLeft.push(note)
+    }
+    else {
+      result.notesDeleted.push(note)
+    }
+  })
+  return result
 }
 
 
@@ -140,7 +154,8 @@ const notesState = (state = initialViewState, action) => {
     case DELETE_NOTE:
       return {
         ...state,
-        notes: state.notes.filter(note => note.id !== action.id)
+        notes: splitFromDeleted(state.notes, action.id).notesLeft,
+        deleted: splitFromDeleted(state.notes, action.id).notesDeleted
       }
     case COPY_NOTE:
       return {

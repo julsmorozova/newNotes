@@ -20,9 +20,6 @@ const noteStyle = {
   transition: 'none'
 }
 
-let anchor = ''
-let input = ''
-
 const mapStateToProps = (state) => {
   return {
     todos: state.todos,
@@ -45,6 +42,8 @@ class AddNoteForm extends React.Component {
     super(props)
 
     this.state = {
+      textValue: '',
+      titleValue: '',
       height: DEFAULT_HEIGHT,
       todoFormOpen: false
     }
@@ -69,6 +68,24 @@ class AddNoteForm extends React.Component {
     })
   }
 
+  handleTextChange = (event) => {
+    this.setState({
+      textValue: event.target.value
+    })
+  }
+
+  handleTitleChange = (event) => {
+    this.setState({
+      titleValue: event.target.value
+    })
+  }
+
+  clearInputs = (event) => {
+    this.setState({
+      titleValue: '',
+      textValue: ''
+    })
+  }
 
   setFilledTextareaHeight() {
     if (this.mounted) {
@@ -91,12 +108,12 @@ class AddNoteForm extends React.Component {
           id='textarea'
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          defaultValue={''}
+          value={this.state.textValue}
+          onChange={this.handleTextChange}
           style={{
             height,
             resize: isOneLine ? 'none' : null
           }}
-          ref={node => {anchor = node}}
           onKeyUp={this.setFilledTextareaHeight}
         />
       </div>
@@ -111,7 +128,7 @@ class AddNoteForm extends React.Component {
         ref={(c) => this.ghost = c}
         aria-hidden='true'
       >
-        {anchor.value}
+        {this.state.textValue}
       </div>
     )
   }
@@ -132,10 +149,11 @@ class AddNoteForm extends React.Component {
         <Paper style={listView ? {...noteStyle, width: '30rem'} : noteStyle} zDepth={1}>
           <input
             className={styles.titleInput}
-            ref={node => {input = node}}
+            value={this.state.titleValue}
             placeholder='Add title...'
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
+            onChange={this.handleTitleChange}
           />
           <div
             style={{
@@ -164,10 +182,9 @@ class AddNoteForm extends React.Component {
               tooltipName='Save note'
               tooltipTop='130%'
               action={() => {
-                onAddClick(input.value || '', anchor.value || '', todos)
-                input.value = ''
-                anchor.value = ''
-                this.hideTodoForm
+                onAddClick(this.state.titleValue || '', this.state.textValue || '', todos)
+                this.clearInputs()
+                this.hideTodoForm()
               }}
             />
           </div>

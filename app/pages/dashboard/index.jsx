@@ -21,9 +21,7 @@ const mapDispatchToProps = (dispatch) => {
 class Dashboard extends React.Component {
   render() {
     return (
-      <div className={styles.main}>
-        <Header />
-        <Settings />
+      <div className={styles.content}>
         <NotesBoard notes={this.props.notes} deleteNote={this.props.deleteNote} />
       </div>
     )
