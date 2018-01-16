@@ -14,7 +14,7 @@ const iconStyle= {
 const btnStyle = {
   width: '1.3rem',
   padding: '0rem',
-  margin: '0 0.5rem',
+  margin: '0 0.8rem',
   height: '1.3rem'
 }
 const containerStyle = {
@@ -52,7 +52,7 @@ class Settings extends React.Component {
         containerStyle={containerStyle}
       >
         <div className={styles.title}>
-          Some Settings
+          Settings
           <ActionButton
             icon='clear'
             iconColor='#777'
@@ -61,7 +61,7 @@ class Settings extends React.Component {
           />
         </div>
         <div className={styles.menuItem}>
-          <Link to='/trash' onClick={toggleSettings}>
+          <Link to='/trash' onClick={toggleSettings} className={styles.link}>
             <IconButton
               style={btnStyle}
               iconClassName='material-icons'
@@ -73,7 +73,16 @@ class Settings extends React.Component {
           </Link>
         </div>
         <div className={styles.menuItem}>
-          <Link to='/' onClick={toggleSettings}>Dashboard</Link>
+          <Link to='/' onClick={toggleSettings} className={styles.link}>
+            <IconButton
+              style={btnStyle}
+              iconClassName='material-icons'
+              iconStyle={{...iconStyle, color: iconColor, fontSize: iconSize}}
+            >
+              note
+            </IconButton>
+            <span className={styles.menuItemText}>Notes</span>
+          </Link>
         </div>
       </Drawer>
     )

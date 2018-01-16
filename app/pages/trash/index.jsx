@@ -3,19 +3,51 @@ import { connect } from 'react-redux'
 import Header from '../../components/header'
 import styles from './trash.scss'
 import Settings from '../../components/settings'
+import Note from '../../components/notes_board/note'
 
 const mapStateToProps = (state) => {
   return {
-    deleted: state.notesState.deleted
+    deleted: state.notesState.deleted,
+    listView: state.view.listView,
   }
 }
 
+const trashBoardStyles = {
+  width: '80%',
+  margin: '1rem auto',
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  alignItems: 'flex-start'
+}
+
 class TrashPage extends React.Component {
+  makeNote() {
+    if (this.props.deleted) {
+      return this.props.deleted.map(note => {
+        return (
+          <Note key={note.id + Math.random()} note={note} />
+        )
+      })
+    }
+    return ''
+  }
+
   render() {
     console.log(this.props.deleted)
     return (
       <div className={styles.content}>
-        <div>Trash Page</div>
+        <h3>Notes you deleted</h3>
+        <div style={this.props.listView ?
+          {...trashBoardStyles,
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
+            width: '65%'} :
+          trashBoardStyles}
+        >
+          {this.makeNote()}
+        </div>
       </div>
     )
   }

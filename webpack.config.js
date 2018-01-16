@@ -6,8 +6,9 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   devServer: {
+    historyApiFallback: true,
     noInfo: true,
-    contentBase: path.join(__dirname, 'compiled'),
+    contentBase: path.join(__dirname, './compiled'),
     port: 9000
   },
   entry: path.resolve(__dirname, './app/entry.jsx'),

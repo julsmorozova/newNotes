@@ -11,8 +11,7 @@ import Main from './components/main'
 import store from 'core/store'
 import {
   BrowserRouter as Router,
-  Route,
-  Switch
+  Route
 } from 'react-router-dom'
 
 injectTapEventPlugin() //https://github.com/callemall/material-ui/issues/1011
@@ -34,10 +33,8 @@ const wrapper = (
     <Provider store={store}>
       <Router>
         <Main>
-          <Switch>
-            <Route exact path='/' component={Dashboard} />
-            <Route path='/trash' component={TrashPage} />
-          </Switch>
+          <Route exact path='/' component={Dashboard} />
+          <Route path='/trash' component={TrashPage} />
         </Main>
       </Router>
     </Provider>

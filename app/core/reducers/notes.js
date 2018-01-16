@@ -61,13 +61,13 @@ const makeThisNoteList = (noteId, todos, firstTodoId) => {
 }
 
 const splitFromDeleted = (notes, actionId) => {
-  const result = {notesLeft: [], notesDeleted: []}
+  const result = {notesLeft: [], notesDeleted: {}}
   notes.forEach(function(note) {
     if (note.id !== actionId) {
       result.notesLeft.push(note)
     }
     else {
-      result.notesDeleted.push(note)
+      result.notesDeleted = note;
     }
   })
   return result
@@ -155,7 +155,7 @@ const notesState = (state = initialViewState, action) => {
       return {
         ...state,
         notes: splitFromDeleted(state.notes, action.id).notesLeft,
-        deleted: splitFromDeleted(state.notes, action.id).notesDeleted
+        deleted: [...state.deleted, splitFromDeleted(state.notes, action.id).notesDeleted]
       }
     case COPY_NOTE:
       return {
