@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Header from '../../components/header'
 import styles from './trash.scss'
 import Settings from '../../components/settings'
-import Note from '../../components/notes_board/note'
+import NoteDeleted from '../../components/notes_board/note_deleted'
 
 const mapStateToProps = (state) => {
   return {
@@ -26,7 +26,7 @@ class TrashPage extends React.Component {
     if (this.props.deleted) {
       return this.props.deleted.map(note => {
         return (
-          <Note key={note.id + Math.random()} note={note} />
+          <NoteDeleted key={note.id + Math.random()} note={note} />
         )
       })
     }

@@ -9,7 +9,8 @@ import {
   COPY_NOTE,
   ADD_DEFAULT_TODOS,
   DELETE_TODO_LIST,
-  EDIT_NOTE_TITLE
+  EDIT_NOTE_TITLE,
+  DELETE_FOREVER
 } from 'core/actions'
 
 const initialViewState = {
@@ -156,6 +157,11 @@ const notesState = (state = initialViewState, action) => {
         ...state,
         notes: splitFromDeleted(state.notes, action.id).notesLeft,
         deleted: [...state.deleted, splitFromDeleted(state.notes, action.id).notesDeleted]
+      }
+    case DELETE_FOREVER:
+      return {
+        ...state,
+        deleted: state.deleted.filter(note => note.id !== action.id)
       }
     case COPY_NOTE:
       return {

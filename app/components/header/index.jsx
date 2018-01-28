@@ -34,6 +34,7 @@ class Header extends React.Component {
             {listView ?
               <ActionButton
                 icon='view_quilt'
+                iconSize='1.9rem'
                 iconColor='#fff'
                 tooltipVisible
                 tooltipName='Grid view'
@@ -41,6 +42,7 @@ class Header extends React.Component {
               />
               :
               <ActionButton
+                iconSize='1.9rem'
                 icon='view_stream'
                 iconColor='#fff'
                 tooltipVisible

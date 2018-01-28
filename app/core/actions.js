@@ -17,6 +17,7 @@ export const COPY_NOTE = 'COPY_NOTE'
 export const ADD_DEFAULT_TODOS = 'ADD_DEFAULT_TODOS'
 export const DELETE_TODO_LIST = 'DELETE_TODO_LIST'
 export const EDIT_NOTE_TITLE = 'EDIT_NOTE_TITLE'
+export const DELETE_FOREVER = 'DELETE_FOREVER'
 
 let nextTodoId = 0
 let newId = 0
@@ -111,6 +112,13 @@ export const showGridView = (payload) => ({ type: SHOW_GRID_VIEW, ...payload })
 export const deleteNote = (id) => {
   return {
     type: DELETE_NOTE,
+    id
+  }
+}
+
+export const deleteForever = (id) => {
+  return {
+    type: DELETE_FOREVER,
     id
   }
 }

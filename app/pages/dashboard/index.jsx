@@ -4,7 +4,6 @@ import Header from '../../components/header'
 import styles from './dashboard.scss'
 import Settings from '../../components/settings'
 import NotesBoard from '../../components/notes_board'
-import { deleteNote } from 'core/actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -12,20 +11,14 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteNote: (id) => dispatch(deleteNote(id))
-  }
-}
-
 class Dashboard extends React.Component {
   render() {
     return (
       <div className={styles.content}>
-        <NotesBoard notes={this.props.notes} deleteNote={this.props.deleteNote} />
+        <NotesBoard notes={this.props.notes} />
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(mapStateToProps, null)(Dashboard)
