@@ -140,7 +140,7 @@ class NoteDeleted extends React.Component {
           </div>
           { this.state.buttonsShown ? //check if note is in editable mode
             <div className={styles.buttonsBlock} style={this.state.buttonsShown ?
-              {display: 'inline-block', backgroundColor: this.matchColors(note.color)} :
+              {display: 'flex', backgroundColor: this.matchColors(note.color)} :
               {display: none}}
             >
               <ActionButton
@@ -148,8 +148,7 @@ class NoteDeleted extends React.Component {
                 iconSize='1.4rem'
                 tooltipVisible
                 tooltipName='Restore'
-                tooltipRight='-90%'
-                tooltipTop='140%'
+                tooltipTop='130%'
                 action={() => {restoreNote(note.id)}}
               />
               <ActionButton
