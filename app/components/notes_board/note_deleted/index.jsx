@@ -3,6 +3,7 @@ import styles from '../note/note.scss'
 import {
   deleteNote,
   deleteForever,
+  restoreNote,
   openConfirmingDialog
 } from 'core/actions'
 import { connect } from 'react-redux'
@@ -40,7 +41,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteNote: (id) => dispatch(deleteNote(id)),
     deleteForever: (id) => dispatch(deleteForever(id)),
-    openConfirmingDialog: () => dispatch(openConfirmingDialog())
+    openConfirmingDialog: () => dispatch(openConfirmingDialog()),
+    restoreNote: (id) => dispatch(restoreNote(id))
   }
 }
 
@@ -95,6 +97,7 @@ class NoteDeleted extends React.Component {
       note,
       deleteNote,
       deleteForever,
+      restoreNote,
       openConfirmingDialog,
       confirmingDialogOpen
     } = this.props
@@ -147,7 +150,7 @@ class NoteDeleted extends React.Component {
                 tooltipName='Restore'
                 tooltipRight='-90%'
                 tooltipTop='140%'
-                action={() => {}}
+                action={() => {restoreNote(note.id)}}
               />
               <ActionButton
                 icon='delete'

@@ -10,7 +10,8 @@ import {
   ADD_DEFAULT_TODOS,
   DELETE_TODO_LIST,
   EDIT_NOTE_TITLE,
-  DELETE_FOREVER
+  DELETE_FOREVER,
+  RESTORE_NOTE
 } from 'core/actions'
 
 const initialViewState = {
@@ -61,14 +62,29 @@ const makeThisNoteList = (noteId, todos, firstTodoId) => {
   })
 }
 
-const splitFromDeleted = (notes, actionId) => {
+const handleDeletion = (notes, actionId) => {
   const result = {notesLeft: [], notesDeleted: {}}
   notes.forEach(function(note) {
     if (note.id !== actionId) {
       result.notesLeft.push(note)
     }
     else {
-      result.notesDeleted = note;
+      result.notesDeleted = note
+    }
+  })
+  return result
+}
+
+const handleRestoring = (notes, deleted, actionId) => {
+  const result = {notesUpdated: [], notesDeleted: []}
+  deleted.forEach(function(note) {
+    if (note.id !== actionId) {
+      result.notesDeleted.push(note)
+    }
+    else {
+      result.notesUpdated = notes.slice()
+      result.notesUpdated.splice(note.id, 0, note)
+      console.log('NotesUpdated', result.notesUpdated)
     }
   })
   return result
@@ -155,13 +171,19 @@ const notesState = (state = initialViewState, action) => {
     case DELETE_NOTE:
       return {
         ...state,
-        notes: splitFromDeleted(state.notes, action.id).notesLeft,
-        deleted: [...state.deleted, splitFromDeleted(state.notes, action.id).notesDeleted]
+        notes: handleDeletion(state.notes, action.id).notesLeft,
+        deleted: [...state.deleted, handleDeletion(state.notes, action.id).notesDeleted]
       }
     case DELETE_FOREVER:
       return {
         ...state,
         deleted: state.deleted.filter(note => note.id !== action.id)
+      }
+    case RESTORE_NOTE:
+      return {
+        ...state,
+        notes: handleRestoring(state.notes, state.deleted, action.id).notesUpdated,
+        deleted: handleRestoring(state.notes, state.deleted, action.id).notesDeleted
       }
     case COPY_NOTE:
       return {
